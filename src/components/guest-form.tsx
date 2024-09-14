@@ -9,16 +9,7 @@ import { FormInputNumber } from "./widgets/form-input-number.";
 import { FormInputText } from "./widgets/form-input-text";
 // Import firebase configuration from firebase.ts file
 
-const FoodOptions = [
-  {
-    label: "None",
-    value: "0",
-  },
-  {
-    label: "Full day",
-    value: "1",
-  },
-];
+
 const PujaDayOptions = [
   {
     label: "None",

@@ -19,7 +19,7 @@ import { db } from "../firebase/firebase";
 import { Guest } from "../types";
 
 function Profile() {
-  const { currentUser, signOut } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [guests, setGuests] = useState<Guest[]>([]);
   const navigate = useNavigate();
 
