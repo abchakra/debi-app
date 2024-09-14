@@ -18,7 +18,7 @@ function App() {
     if (currentUser) {
       navigate("/profile");
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   return (
     <Routes>

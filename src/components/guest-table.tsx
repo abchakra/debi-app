@@ -126,7 +126,7 @@ const GuestTable = (props: GuestTableProps) => {
         Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
       },
     ],
-    [props.guests]
+    [props.total]
   );
 
   const table = useMaterialReactTable({
