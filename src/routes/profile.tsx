@@ -49,7 +49,7 @@ function Profile() {
     dinnerC: number[],
     visitorC: number[]
   ): void => {
-    if (value === "Full day") {
+    if (value.toLowerCase().trim() === "full day") {
       fullDay[day] = fullDay[day] + adults;
       fullDayC[day] = fullDayC[day] + children;
     } else if (value === "Sindoor khela") {
