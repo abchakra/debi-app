@@ -16,11 +16,9 @@ import {
   Typography
 } from "@mui/material";
 import { onValue, ref } from "firebase/database";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
-import { AuthContext } from "../context/auth-context";
 import { db } from "../firebase/firebase";
 import { GuestTableRow } from "../types";
 
@@ -56,9 +54,9 @@ function CustomTabPanel(props: TabPanelProps) {
 
 
 function Profile() {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
   const [guests, setGuests] = useState<GuestTableRow[]>([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [value, setValue] = useState(0);
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
   const [lunch, setLunch] = useState([0, 0, 0, 0, 0]);

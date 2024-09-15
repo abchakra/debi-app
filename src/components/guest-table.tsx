@@ -1,12 +1,10 @@
 import PaidIcon from "@mui/icons-material/Paid";
-import { ref, update } from "firebase/database";
 import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from "material-react-table";
 import { useMemo } from "react";
-import { db } from "../firebase/firebase";
 import { GuestTableRow } from "../types";
 
 interface GuestTableProps {
@@ -14,19 +12,19 @@ interface GuestTableProps {
   total: number;
 }
 const GuestTable = (props: GuestTableProps) => {
-  const writeUserData = (refId: string) => {
-    console.log(refId);
-    update(ref(db, "guests/" + refId), {
-      paid: true,
-    })
-      .then(() => {
-        console.log("Data updated successfully");
-      })
-      .catch((error: any) => {
-        console.log("Unsuccessful");
-        console.log(error);
-      });
-  };
+  // const writeUserData = (refId: string) => {
+  //   console.log(refId);
+  //   update(ref(db, "guests/" + refId), {
+  //     paid: true,
+  //   })
+  //     .then(() => {
+  //       console.log("Data updated successfully");
+  //     })
+  //     .catch((error: any) => {
+  //       console.log("Unsuccessful");
+  //       console.log(error);
+  //     });
+  // };
 
   //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<GuestTableRow>[]>(
