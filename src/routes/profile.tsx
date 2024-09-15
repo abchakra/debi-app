@@ -286,8 +286,8 @@ function Profile() {
                 <Typography>Total Nobomi</Typography>
                 <Typography> FullDay: {fullDay[0]} Children:{fullDayC[0]}</Typography>
                 <Typography> Lunch: {fullDay[0] + lunch[0]} Children:{fullDayC[0] + lunchC[0]}</Typography>
-                <Typography> Dinner: {fullDay[0] + dinner[0]} Children:{fullDayC[0] + dinnerC[0]}                </Typography>
-
+                <Typography> Dinner: {fullDay[0] + dinner[0]} Children:{fullDayC[0] + dinnerC[0]}</Typography>
+                <Typography> Visitor: {visitor[0]} Children:{visitorC[0]}</Typography>
               </CardContent>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
@@ -295,8 +295,8 @@ function Profile() {
                 <Typography>Total Nobomi</Typography>
                 <Typography> FullDay: {fullDay[1]} Children:{fullDayC[1]}</Typography>
                 <Typography> Lunch: {fullDay[1] + lunch[1]} Children:{fullDayC[1] + lunchC[1]}</Typography>
-                <Typography> Dinner: {fullDay[1] + dinner[1]} Children:{fullDayC[1] + dinnerC[1]}                </Typography>
-
+                <Typography> Dinner: {fullDay[1] + dinner[1]} Children:{fullDayC[1] + dinnerC[1]}</Typography>
+                <Typography> Visitor: {visitor[1]} Children:{visitorC[1]}</Typography>
               </CardContent>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
@@ -304,8 +304,8 @@ function Profile() {
                 <Typography>Total Nobomi</Typography>
                 <Typography> FullDay: {fullDay[2]} Children:{fullDayC[2]}</Typography>
                 <Typography> Lunch: {fullDay[2] + lunch[2]} Children:{fullDayC[2] + lunchC[2]}</Typography>
-                <Typography> Dinner: {fullDay[2] + dinner[2]} Children:{fullDayC[2] + dinnerC[2]}                </Typography>
-
+                <Typography> Dinner: {fullDay[2] + dinner[2]} Children:{fullDayC[2] + dinnerC[2]}</Typography>
+                <Typography> Visitor: {visitor[2]} Children:{visitorC[2]}</Typography>
               </CardContent>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
@@ -313,8 +313,8 @@ function Profile() {
                 <Typography>Total Nobomi</Typography>
                 <Typography> FullDay: {fullDay[3]} Children:{fullDayC[3]}</Typography>
                 <Typography> Lunch: {fullDay[3] + lunch[3]} Children:{fullDayC[3] + lunchC[3]}</Typography>
-                <Typography> Dinner: {fullDay[3] + dinner[3]} Children:{fullDayC[3] + dinnerC[3]}                </Typography>
-
+                <Typography> Dinner: {fullDay[3] + dinner[3]} Children:{fullDayC[3] + dinnerC[3]}</Typography>
+                <Typography> Visitor: {visitor[3]} Children:{visitorC[3]}</Typography>
               </CardContent>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
@@ -322,7 +322,7 @@ function Profile() {
                 <Typography>Total Nobomi</Typography>
                 <Typography> FullDay: {fullDay[4]} Children:{fullDayC[3]}</Typography>
                 <Typography> Lunch: {fullDay[4] + lunch[4]} Children:{fullDayC[4] + lunchC[4]}</Typography>
-
+                <Typography> Visitor: {visitor[4]} Children:{visitorC[4]}</Typography>
               </CardContent>
             </CustomTabPanel>
 
