@@ -279,7 +279,7 @@ function Profile() {
 
 
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tabs value={value} onChange={handleChange} aria-label="days" variant="scrollable">
                 <Tab label="Day1" {...a11yProps(0)} />
                 <Tab label="Day2" {...a11yProps(1)} />
                 <Tab label="Day3" {...a11yProps(2)} />
