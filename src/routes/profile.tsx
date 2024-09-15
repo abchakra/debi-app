@@ -69,6 +69,7 @@ function Profile() {
   const [visitorC, setVisitorC] = useState([0, 0, 0, 0, 0]);
 
   const [total, setTotal] = useState(0);
+  const [paidTotal, setPaidTotal] = useState(0);
 
   const updateValue = (
     value: string,
@@ -107,6 +108,7 @@ function Profile() {
   useEffect(() => {
     const query = ref(db, "guests");
     return onValue(query, (snapshot) => {
+      let totalTicketsSold = 0;
       let totalPayment = 0;
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -127,7 +129,10 @@ function Profile() {
 
           const adults = data[id].adults;
           const children = data[id].children;
-          totalPayment += data[id].total;
+          totalTicketsSold += data[id].total;
+          if (data[id].paid) {
+            totalPayment += data[id].total;
+          }
           updateValue(
             data[id].day1,
             0,
@@ -199,7 +204,8 @@ function Profile() {
             visitorC
           );
         }
-        setTotal(totalPayment);
+        setTotal(totalTicketsSold);
+        setPaidTotal(totalPayment)
         setGuests(newGuestList);
         setFullDay(fullDay);
         setLunch(lunch);
@@ -274,11 +280,11 @@ function Profile() {
 
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="Sasthi" {...a11yProps(0)} />
-                <Tab label="Saptami" {...a11yProps(1)} />
-                <Tab label="Astomi" {...a11yProps(2)} />
-                <Tab label="Nobomi" {...a11yProps(3)} />
-                <Tab label="Dosomi" {...a11yProps(4)} />
+                <Tab label="Day1" {...a11yProps(0)} />
+                <Tab label="Day2" {...a11yProps(1)} />
+                <Tab label="Day3" {...a11yProps(2)} />
+                <Tab label="Day4" {...a11yProps(3)} />
+                <Tab label="Day5" {...a11yProps(4)} />
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -334,7 +340,7 @@ function Profile() {
       <Card sx={{}}>
         <CardContent>
           {guests.length > 0 ? (
-            <GuestTable guests={guests} total={total}></GuestTable>
+            <GuestTable guests={guests} total={total} paidTotal={paidTotal}></GuestTable>
           ) : (
             <></>
           )}

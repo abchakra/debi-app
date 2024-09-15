@@ -10,6 +10,7 @@ import { GuestTableRow } from "../types";
 interface GuestTableProps {
   guests: GuestTableRow[];
   total: number;
+  paidTotal: number
 }
 const GuestTable = (props: GuestTableProps) => {
   // const writeUserData = (refId: string) => {
@@ -122,6 +123,7 @@ const GuestTable = (props: GuestTableProps) => {
             )}
           </span>
         ),
+        Footer: () => <div>Paid: {props.paidTotal.toFixed(2)}</div>,
       },
       {
         accessorKey: "total",
@@ -130,7 +132,7 @@ const GuestTable = (props: GuestTableProps) => {
         Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
       },
     ],
-    [props.total]
+    [props.total, props.paidTotal]
   );
 
   const table = useMaterialReactTable({
