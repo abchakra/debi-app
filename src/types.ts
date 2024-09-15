@@ -37,6 +37,11 @@ export interface Guest {
 }
 
 
+export interface GuestTableRow extends Guest {
+
+    id: string;
+}
+
 
 export type TicketType = "None" | "Full" | "Afternoon" | "Evening" | "Visitor"
 

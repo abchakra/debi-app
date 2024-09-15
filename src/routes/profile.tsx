@@ -1,10 +1,17 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
+  Box,
   Card,
   CardContent,
   Container,
   IconButton,
+  Tab,
+  Tabs,
   Toolbar,
   Typography
 } from "@mui/material";
@@ -15,13 +22,44 @@ import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
 import { AuthContext } from "../context/auth-context";
 import { db } from "../firebase/firebase";
-import { Guest } from "../types";
+import { GuestTableRow } from "../types";
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
 
 function Profile() {
   const { currentUser } = useContext(AuthContext);
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const [guests, setGuests] = useState<GuestTableRow[]>([]);
   const navigate = useNavigate();
-
+  const [value, setValue] = useState(0);
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
   const [lunch, setLunch] = useState([0, 0, 0, 0, 0]);
   const [dinner, setDinner] = useState([0, 0, 0, 0, 0]);
@@ -65,14 +103,16 @@ function Profile() {
       visitorC[day] = visitorC[day] + children;
     }
   };
-
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   useEffect(() => {
     const query = ref(db, "guests");
     return onValue(query, (snapshot) => {
       let totalPayment = 0;
       if (snapshot.exists()) {
         const data = snapshot.val();
-        const newGuestList: Guest[] = [];
+        const newGuestList: GuestTableRow[] = [];
 
         const fullDay = [0, 0, 0, 0, 0];
         const lunch = [0, 0, 0, 0, 0];
@@ -203,7 +243,7 @@ function Profile() {
               }
             }}
           >
-            Add Guest
+            Add GuestTableRow
           </Button> */}
         </Toolbar>
       </AppBar>
@@ -221,6 +261,77 @@ function Profile() {
             visitorC={visitorC}
           ></StackedColumnChart>
         </CardContent>
+      </Card>
+      <Card sx={{}}>
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Statistics
+          </AccordionSummary>
+          <AccordionDetails>
+
+
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tab label="Sasthi" {...a11yProps(0)} />
+                <Tab label="Saptami" {...a11yProps(1)} />
+                <Tab label="Astomi" {...a11yProps(2)} />
+                <Tab label="Nobomi" {...a11yProps(3)} />
+                <Tab label="Dosomi" {...a11yProps(4)} />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <CardContent>
+                <Typography>Total Nobomi</Typography>
+                <Typography> FullDay: {fullDay[0]} Children:{fullDayC[0]}</Typography>
+                <Typography> Lunch: {fullDay[0] + lunch[0]} Children:{fullDayC[0] + lunchC[0]}</Typography>
+                <Typography> Dinner: {fullDay[0] + dinner[0]} Children:{fullDayC[0] + dinnerC[0]}                </Typography>
+
+              </CardContent>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <CardContent>
+                <Typography>Total Nobomi</Typography>
+                <Typography> FullDay: {fullDay[1]} Children:{fullDayC[1]}</Typography>
+                <Typography> Lunch: {fullDay[1] + lunch[1]} Children:{fullDayC[1] + lunchC[1]}</Typography>
+                <Typography> Dinner: {fullDay[1] + dinner[1]} Children:{fullDayC[1] + dinnerC[1]}                </Typography>
+
+              </CardContent>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <CardContent>
+                <Typography>Total Nobomi</Typography>
+                <Typography> FullDay: {fullDay[2]} Children:{fullDayC[2]}</Typography>
+                <Typography> Lunch: {fullDay[2] + lunch[2]} Children:{fullDayC[2] + lunchC[2]}</Typography>
+                <Typography> Dinner: {fullDay[2] + dinner[2]} Children:{fullDayC[2] + dinnerC[2]}                </Typography>
+
+              </CardContent>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+              <CardContent>
+                <Typography>Total Nobomi</Typography>
+                <Typography> FullDay: {fullDay[3]} Children:{fullDayC[3]}</Typography>
+                <Typography> Lunch: {fullDay[3] + lunch[3]} Children:{fullDayC[3] + lunchC[3]}</Typography>
+                <Typography> Dinner: {fullDay[3] + dinner[3]} Children:{fullDayC[3] + dinnerC[3]}                </Typography>
+
+              </CardContent>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={4}>
+              <CardContent>
+                <Typography>Total Nobomi</Typography>
+                <Typography> FullDay: {fullDay[4]} Children:{fullDayC[3]}</Typography>
+                <Typography> Lunch: {fullDay[4] + lunch[4]} Children:{fullDayC[4] + lunchC[4]}</Typography>
+
+              </CardContent>
+            </CustomTabPanel>
+
+
+
+          </AccordionDetails>
+        </Accordion>
       </Card>
       <Card sx={{}}>
         <CardContent>

@@ -1,29 +1,35 @@
 import PaidIcon from "@mui/icons-material/Paid";
+import { ref, update } from "firebase/database";
 import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from "material-react-table";
 import { useMemo } from "react";
-import { Guest } from "../types";
+import { db } from "../firebase/firebase";
+import { GuestTableRow } from "../types";
 
 interface GuestTableProps {
-  guests: Guest[];
+  guests: GuestTableRow[];
   total: number;
 }
 const GuestTable = (props: GuestTableProps) => {
-  // const [total, setTotal] = useState("00.00");
-
-  // useEffect(() => {
-  //   const val = props.guests.reduce((acc, row) => acc + row.total, 0);
-
-  //   setTotal(val.toFixed(2));
-  // }, [props.guests]);
-
-  // console.log(">>>>>>>>", total, props.guests.length);
+  const writeUserData = (refId: string) => {
+    console.log(refId);
+    update(ref(db, "guests/" + refId), {
+      paid: true,
+    })
+      .then(() => {
+        console.log("Data updated successfully");
+      })
+      .catch((error: any) => {
+        console.log("Unsuccessful");
+        console.log(error);
+      });
+  };
 
   //should be memoized or stable
-  const columns = useMemo<MRT_ColumnDef<Guest>[]>(
+  const columns = useMemo<MRT_ColumnDef<GuestTableRow>[]>(
     () => [
       {
         accessorKey: "guestName", //access nested data with dot notatio
