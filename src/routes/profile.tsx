@@ -1,13 +1,12 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
-  Button,
   Card,
   CardContent,
   Container,
   IconButton,
   Toolbar,
-  Typography,
+  Typography
 } from "@mui/material";
 import { onValue, ref } from "firebase/database";
 import { useContext, useEffect, useState } from "react";
@@ -195,7 +194,7 @@ function Profile() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DeBI e.V. DurgaPujo 2024
           </Typography>
-          <Button
+          {/* <Button
             // variant="contained"
             color="inherit"
             onClick={() => {
@@ -205,7 +204,7 @@ function Profile() {
             }}
           >
             Add Guest
-          </Button>
+          </Button> */}
         </Toolbar>
       </AppBar>
 
