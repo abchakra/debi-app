@@ -38,6 +38,7 @@ interface IFormInput {
   adults: number;
   children: number;
   non_vegetarian: number;
+  transport: string;
   vegetarian: number;
   day1: number;
   day2: number;
@@ -64,6 +65,7 @@ const defaultValues = {
   day4: undefined,
   day5: undefined,
   guestName: "",
+  transport: "Car",
   isPresent: false,
   isStudent: false,
   message: "",
@@ -89,6 +91,7 @@ const GuestForm = () => {
       day3: data.day3,
       day4: data.day4,
       day5: data.day5,
+      transport: data.transport,
       guestName: data.guestName,
       isPresent: data.isPresent,
       isStudent: data.isStudent,

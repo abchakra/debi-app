@@ -23,6 +23,7 @@ export interface Guest {
     children: number;
     non_vegetarian: number;
     vegetarian: number;
+    transport: string;
     day1: number;
     day2: number;
     day3: number | null;
@@ -37,9 +38,25 @@ export interface Guest {
 }
 
 
-export interface GuestTableRow extends Guest {
-
+export type GuestTableRow = {
     id: string;
+    email: string;
+    adults: number;
+    children: number;
+    non_vegetarian: number;
+    vegetarian: number;
+    transport: string;
+    day1: number;
+    day2: number;
+    day3: number | null;
+    day4: number | null;
+    day5: number | null;
+    guestName: string;
+    isPresent: boolean;
+    isStudent: boolean;
+    message: string;
+    paid: boolean;
+    total: number;
 }
 
 

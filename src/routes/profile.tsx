@@ -85,21 +85,23 @@ function Profile() {
     dinnerC: number[],
     visitorC: number[]
   ): void => {
-    if (value.toLowerCase().trim() === "full day") {
-      fullDay[day] = fullDay[day] + adults;
-      fullDayC[day] = fullDayC[day] + children;
-    } else if (value === "Sindoor khela") {
-      fullDay[day] = fullDay[day] + adults;
-      fullDayC[day] = fullDayC[day] + children;
-    } else if (value === "Dinner") {
-      dinner[day] = dinner[day] + adults;
-      dinnerC[day] = dinnerC[day] + children;
-    } else if (value === "Lunch") {
-      lunch[day] = lunch[day] + adults;
-      lunchC[day] = lunchC[day] + children;
-    } else if (value === "Visitor") {
-      visitor[day] = visitor[day] + adults;
-      visitorC[day] = visitorC[day] + children;
+    if (value) {
+      if (value.toLowerCase().trim() === "full day") {
+        fullDay[day] = fullDay[day] + adults;
+        fullDayC[day] = fullDayC[day] + children;
+      } else if (value === "Sindoor khela") {
+        fullDay[day] = fullDay[day] + adults;
+        fullDayC[day] = fullDayC[day] + children;
+      } else if (value === "Dinner") {
+        dinner[day] = dinner[day] + adults;
+        dinnerC[day] = dinnerC[day] + children;
+      } else if (value === "Lunch") {
+        lunch[day] = lunch[day] + adults;
+        lunchC[day] = lunchC[day] + children;
+      } else if (value === "Visitor") {
+        visitor[day] = visitor[day] + adults;
+        visitorC[day] = visitorC[day] + children;
+      }
     }
   };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

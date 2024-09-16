@@ -111,11 +111,14 @@ class StackedColumnChart extends React.Component<
                 style: {
                   fontSize: "13px",
                   fontWeight: 900,
+                  color: "#fff"
                 },
               },
             },
           },
         },
+
+
         xaxis: {
           type: "datetime",
           categories: [
@@ -125,14 +128,30 @@ class StackedColumnChart extends React.Component<
             "10/12/2024 GMT",
             "10/13/2024 GMT",
           ],
+          labels: {
+            style: {
+              colors: '#fff'
+            }
+          }
         },
         legend: {
           position: "right",
           offsetY: 40,
+          labels: {
+            colors: "#fff"
+          }
+
         },
         fill: {
           opacity: 1,
         },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#fff'
+            }
+          }
+        }
       },
     };
   }
