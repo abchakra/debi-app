@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
 
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
 import { download, generateCsv, mkConfig } from 'export-to-csv';
 import { ref, remove, update } from 'firebase/database';
 import {
@@ -28,6 +28,37 @@ const csvConfig = mkConfig({
 
 
 const GuestTable = (props: GuestTableProps) => {
+
+  // const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
+  //   [],
+  // );
+
+
+  //this kind of logic would actually live on a server, not client-side
+  // useEffect(() => {
+  //   if (columnFilters?.length) {
+  //     // let filteredRows = [...data];
+  //     // columnFilters.map((filter) => {
+  //     //   const { id: columnId, value: filterValue } = filter;
+  //     //   filteredRows = filteredRows.filter((row) => {
+  //     //     return row[columnId as keyof typeof row]
+  //     //       ?.toString()
+  //     //       ?.toLowerCase()
+  //     //       ?.includes?.((filterValue as string).toLowerCase());
+  //     //   });
+  //     // });
+  //     // setRows(filteredRows);
+
+  //     console.log(table.getFilteredRowModel().rows)
+  //   }
+  //   // else {
+  //   //   setRows([...data]);
+  //   // }
+
+  // }, [columnFilters]);
+
+
+
   const handleExportData = () => {
     const csv = generateCsv(csvConfig)(props.guests);
     download(csvConfig)(csv);
@@ -44,6 +75,16 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "adults", //normal accessorKey
         header: "Adults",
         size: 20,
+        aggregationFn: "sum",
+        AggregatedCell: ({ cell, table }) => (
+          <>
+            <Box
+              sx={{ color: 'info.main', display: 'inline', fontWeight: 'bold' }}
+            >
+              {cell.getValue<number>()}
+            </Box>
+          </>
+        ),
         // Footer: () => <div>{totalAdults}</div>,
       },
       {
@@ -71,61 +112,61 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "day1",
         header: "Shashthi",
         size: 50,
-        filterFn: 'startsWith',
         filterSelectOptions: [
-          { label: 'Dinner', value: 'Dinner' },
-          { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full Day' },
+          // { label: 'Dinner', value: 'Dinner' },
+          // { label: 'Lunch', value: 'Female' },
+          { label: 'Full Day', value: 'Full day' },
+          { label: 'Visitor', value: 'Visitor' },
         ],
-        filterVariant: 'select',
+        filterVariant: 'multi-select',
       },
       {
         accessorKey: "day2",
         header: "Saptami",
         size: 50,
-        filterFn: 'startsWith',
         filterSelectOptions: [
           { label: 'Dinner', value: 'Dinner' },
           { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full Day' },
+          { label: 'Full Day', value: 'Full day' },
+          { label: 'Visitor', value: 'Visitor' },
         ],
-        filterVariant: 'select',
+        filterVariant: 'multi-select',
       },
       {
         accessorKey: "day3",
         header: "Ashtami",
         size: 50,
-        filterFn: 'startsWith',
         filterSelectOptions: [
           { label: 'Dinner', value: 'Dinner' },
           { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full Day' },
+          { label: 'Full Day', value: 'Full day' },
+          { label: 'Visitor', value: 'Visitor' },
         ],
-        filterVariant: 'select',
+        filterVariant: 'multi-select',
       },
       {
         accessorKey: "day4",
         header: "Nabami",
         size: 50,
-        filterFn: 'startsWith',
         filterSelectOptions: [
           { label: 'Dinner', value: 'Dinner' },
           { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full Day' },
+          { label: 'Full Day', value: 'Full day' },
+          { label: 'Visitor', value: 'Visitor' },
         ],
-        filterVariant: 'select',
+        filterVariant: 'multi-select',
       },
       {
         accessorKey: "day5",
         header: "Dashami",
         size: 50,
-        filterFn: 'startsWith',
         filterSelectOptions: [
           { label: 'Dinner', value: 'Dinner' },
           { label: 'Lunch', value: 'Female' },
           { label: 'Sindoor khela', value: 'Sindoor khela' },
+          { label: 'Visitor', value: 'Visitor' },
         ],
-        filterVariant: 'select',
+        filterVariant: 'multi-select',
       },
       {
         accessorKey: "paid",
@@ -168,7 +209,12 @@ const GuestTable = (props: GuestTableProps) => {
     enableColumnFilters: true,
     initialState: {
       density: "compact",
+      // columnFilters: columnFilters,
     },
+    // onColumnFiltersChange: (updater) => {
+    //   setColumnFilters(updater)
+    //   // console.log(table.getFilteredRowModel().rows)
+    // },
     editDisplayMode: 'row',
     // enableEditing: true,
     renderRowActions: ({ row, table }) => (
@@ -242,9 +288,11 @@ const GuestTable = (props: GuestTableProps) => {
         >
           Export All Data
         </Button>
+        <Typography>Adults{12}</Typography>
       </Box>
     )
   });
+
 
   return <MaterialReactTable table={table} />;
 };
