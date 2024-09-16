@@ -107,6 +107,11 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "transport",
         header: "Transportation",
         size: 30,
+        filterSelectOptions: [
+          { label: 'Car', value: 'Car' },
+          { label: 'Public', value: '	Public Transport' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "day1",
@@ -288,7 +293,8 @@ const GuestTable = (props: GuestTableProps) => {
         >
           Export All Data
         </Button>
-        <Typography>Adults{12}</Typography>
+        <Typography>Adults : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.adults, 0)}</Typography>
+        <Typography>Children : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.children, 0)}</Typography>
       </Box>
     )
   });
