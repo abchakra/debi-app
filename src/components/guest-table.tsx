@@ -131,6 +131,7 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "paid",
         header: "Paid",
         size: 50,
+
         Cell: ({ cell }) => (
           <span>
             {cell.getValue<boolean>() ? (
@@ -146,6 +147,7 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "total",
         header: "Total",
         size: 50,
+        filterVariant: 'range',
         Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
       },
       {
@@ -160,6 +162,8 @@ const GuestTable = (props: GuestTableProps) => {
   const table = useMaterialReactTable({
     columns,
     data: props.guests,
+    enableRowDragging: false,
+    enableColumnOrdering: true,
     enableDensityToggle: false,
     enableColumnFilters: true,
     initialState: {
