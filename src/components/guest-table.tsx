@@ -1,8 +1,11 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
-import { Box, Button } from "@mui/material";
+
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { download, generateCsv, mkConfig } from 'export-to-csv';
-import { ref, update } from 'firebase/database';
+import { ref, remove, update } from 'firebase/database';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -68,26 +71,61 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "day1",
         header: "Shashthi",
         size: 50,
+        filterFn: 'startsWith',
+        filterSelectOptions: [
+          { label: 'Dinner', value: 'Dinner' },
+          { label: 'Lunch', value: 'Female' },
+          { label: 'Full Day', value: 'Full Day' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "day2",
         header: "Saptami",
         size: 50,
+        filterFn: 'startsWith',
+        filterSelectOptions: [
+          { label: 'Dinner', value: 'Dinner' },
+          { label: 'Lunch', value: 'Female' },
+          { label: 'Full Day', value: 'Full Day' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "day3",
         header: "Ashtami",
         size: 50,
+        filterFn: 'startsWith',
+        filterSelectOptions: [
+          { label: 'Dinner', value: 'Dinner' },
+          { label: 'Lunch', value: 'Female' },
+          { label: 'Full Day', value: 'Full Day' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "day4",
         header: "Nabami",
         size: 50,
+        filterFn: 'startsWith',
+        filterSelectOptions: [
+          { label: 'Dinner', value: 'Dinner' },
+          { label: 'Lunch', value: 'Female' },
+          { label: 'Full Day', value: 'Full Day' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "day5",
         header: "Dashami",
         size: 50,
+        filterFn: 'startsWith',
+        filterSelectOptions: [
+          { label: 'Dinner', value: 'Dinner' },
+          { label: 'Lunch', value: 'Female' },
+          { label: 'Sindoor khela', value: 'Sindoor khela' },
+        ],
+        filterVariant: 'select',
       },
       {
         accessorKey: "paid",
@@ -129,30 +167,29 @@ const GuestTable = (props: GuestTableProps) => {
     },
     editDisplayMode: 'row',
     // enableEditing: true,
-    //   renderRowActions: ({ row, table }) => (
-    //     <Box sx={{ display: 'flex', gap: '1rem' }}>
-    //       <Tooltip title="Edit">
-    //         <IconButton onClick={() => table.setEditingRow(row)}>
-    //           <EditIcon />
-    //         </IconButton>
-    //       </Tooltip>
-    //       <Tooltip title="Delete">
-    //         <IconButton color="error" onClick={() => {
+    renderRowActions: ({ row, table }) => (
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Tooltip title="Edit">
+          <IconButton onClick={() => table.setEditingRow(row)}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton color="error" onClick={() => {
 
-    //           const guestRef = ref(db, "guests/" + row.original.id);
+            const guestRef = ref(db, "guests/" + row.original.id);
+            remove(guestRef).then(() => console.log("Deleted", row.original.id))
 
-    //           remove(guestRef).then(() => console.log("Deleted", row.original.id))
 
-
-    //         }}>
-    //           <DeleteIcon />
-    //         </IconButton>
-    //       </Tooltip>
-    //     </Box >
-    //   ),
-    //   onEditingRowCancel: () => {
-    //     //clear any validation errors
-    //   },
+          }}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Box >
+    ),
+    onEditingRowCancel: () => {
+      //clear any validation errors
+    },
     onEditingRowSave: ({ row, table, values, }) => {
       //validate data
 
