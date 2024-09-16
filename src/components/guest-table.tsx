@@ -295,6 +295,8 @@ const GuestTable = (props: GuestTableProps) => {
         </Button>
         <Typography>Adults : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.adults, 0)}</Typography>
         <Typography>Children : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.children, 0)}</Typography>
+        <Typography>Veg : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.vegetarian, 0)}</Typography>
+        <Typography>Non-Veg : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.non_vegetarian, 0)}</Typography>
       </Box>
     )
   });
