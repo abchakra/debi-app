@@ -1,13 +1,15 @@
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
 import { Box, Button } from "@mui/material";
 import { download, generateCsv, mkConfig } from 'export-to-csv';
+import { ref, update } from 'firebase/database';
 import {
   MaterialReactTable,
   useMaterialReactTable,
-  type MRT_ColumnDef,
+  type MRT_ColumnDef
 } from "material-react-table";
 import { useMemo } from "react";
+import { db } from '../firebase/firebase';
 import { GuestTableRow } from "../types";
 interface GuestTableProps {
   guests: GuestTableRow[];
@@ -23,19 +25,6 @@ const csvConfig = mkConfig({
 
 
 const GuestTable = (props: GuestTableProps) => {
-  const writeUserData = (_refId: string) => {
-    // console.log(refId);
-    // update(ref(db, "guests/" + refId), {
-    //   paid: true,
-    // })
-    //   .then(() => {
-    //     console.log("Data updated successfully");
-    //   })
-    //   .catch((error: any) => {
-    //     console.log("Unsuccessful");
-    //     console.log(error);
-    //   });
-  };
   const handleExportData = () => {
     const csv = generateCsv(csvConfig)(props.guests);
     download(csvConfig)(csv);
@@ -113,7 +102,7 @@ const GuestTable = (props: GuestTableProps) => {
             )}
           </span>
         ),
-        Footer: () => <div>Paid: {props.paidTotal.toFixed(2)}</div>,
+        Footer: () => <div style={{ display: "flex", flexDirection: "column" }}><span>Paid: {props.paidTotal.toFixed(2)} </span> <span>UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}</span></div>,
       },
       {
         accessorKey: "total",
@@ -138,14 +127,64 @@ const GuestTable = (props: GuestTableProps) => {
     initialState: {
       density: "compact",
     },
-    muiTableBodyRowProps: ({ row }) => ({
-      onClick: () => {
-        writeUserData(row.original.id)
-      },
-      sx: {
-        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-      },
-    }),
+    editDisplayMode: 'row',
+    // enableEditing: true,
+    //   renderRowActions: ({ row, table }) => (
+    //     <Box sx={{ display: 'flex', gap: '1rem' }}>
+    //       <Tooltip title="Edit">
+    //         <IconButton onClick={() => table.setEditingRow(row)}>
+    //           <EditIcon />
+    //         </IconButton>
+    //       </Tooltip>
+    //       <Tooltip title="Delete">
+    //         <IconButton color="error" onClick={() => {
+
+    //           const guestRef = ref(db, "guests/" + row.original.id);
+
+    //           remove(guestRef).then(() => console.log("Deleted", row.original.id))
+
+
+    //         }}>
+    //           <DeleteIcon />
+    //         </IconButton>
+    //       </Tooltip>
+    //     </Box >
+    //   ),
+    //   onEditingRowCancel: () => {
+    //     //clear any validation errors
+    //   },
+    onEditingRowSave: ({ row, table, values, }) => {
+      //validate data
+
+      try {
+        values.adults = Number(values.adults)
+        values.children = Number(values.children)
+        values.vegetarian = Number(values.vegetarian)
+        values.non_vegetarian = Number(values.non_vegetarian)
+        values.total = Number(values.total)
+        values.paid = Boolean(values.paid)
+
+        //save data to api
+
+
+        console.log(row.original.id, values)
+
+        update(ref(db, "guests/" + row.original.id), values)
+          .then(() => {
+            console.log("Data updated successfully");
+          })
+          .catch((error: any) => {
+            console.log("Unsuccessful");
+            console.log(error);
+          });
+
+
+        table.setEditingRow(null); //exit editing mode
+      } catch (error: any) {
+        console.log(error)
+      }
+    },
+
     renderTopToolbarCustomActions: ({ table }) => (
       <Box
         sx={{
