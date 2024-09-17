@@ -13,23 +13,23 @@ import { FormInputText } from "./widgets/form-input-text";
 const PujaDayOptions = [
   {
     label: "None",
-    value: "0",
+    value: "None",
   },
   {
     label: "Full day",
-    value: "1",
+    value: "Full Day",
   },
   {
     label: "Lunch Only",
-    value: "2",
+    value: "Lunch",
   },
   {
     label: "Dinner Only",
-    value: "3",
+    value: "Dinner",
   },
   {
     label: "Visitor",
-    value: "4",
+    value: "Visitor",
   },
 ];
 
@@ -40,11 +40,11 @@ interface IFormInput {
   non_vegetarian: number;
   transport: string;
   vegetarian: number;
-  day1: number;
-  day2: number;
-  day3: number | null;
-  day4: number | null;
-  day5: number | null;
+  day1: string;
+  day2: string;
+  day3: string;
+  day4: string;
+  day5: string;
   guestName: string;
   isPresent: boolean;
   isStudent: boolean;
@@ -59,11 +59,11 @@ const defaultValues = {
   children: 0,
   non_vegetarian: 0,
   vegetarian: 0,
-  day1: undefined,
-  day2: undefined,
-  day3: undefined,
-  day4: undefined,
-  day5: undefined,
+  day1: "None",
+  day2: "None",
+  day3: "None",
+  day4: "None",
+  day5: "None",
   guestName: "",
   transport: "Car",
   isPresent: false,
@@ -82,10 +82,10 @@ const GuestForm = () => {
     const guestRef = ref(db, "/guests");
     const guest: Guest = {
       email: data.email,
-      adults: data.adults,
-      children: data.children,
-      non_vegetarian: data.non_vegetarian,
-      vegetarian: data.vegetarian,
+      adults: Number(data.adults),
+      children: Number(data.children),
+      non_vegetarian: Number(data.non_vegetarian),
+      vegetarian: Number(data.vegetarian),
       day1: data.day1,
       day2: data.day2,
       day3: data.day3,
@@ -96,8 +96,8 @@ const GuestForm = () => {
       isPresent: data.isPresent,
       isStudent: data.isStudent,
       message: data.message,
-      paid: data.paid,
-      total: data.total,
+      paid: Boolean(data.paid),
+      total: Number(data.total),
     };
     push(guestRef, guest);
   };
@@ -139,17 +139,21 @@ const GuestForm = () => {
         label={"Student"}
       />
 
-      <FormInputCheckbox name={"isVeg"} control={control} label={"Veg"} />
-
-      <FormInputCheckbox name={"isCar"} control={control} label={"Car"} />
+      <FormInputNumber
+        name={"vegetarian"}
+        control={control}
+        setValue={setValue}
+        label={"Vegetarian"}
+      />
+      <FormInputNumber
+        name={"non_vegetarian"}
+        control={control}
+        setValue={setValue}
+        label={"Non Vegetarian"}
+      />
 
       <FormInputCheckbox name={"isPaid"} control={control} label={"Paid"} />
 
-      <FormInputCheckbox
-        name={"all5days"}
-        control={control}
-        label={"All 5 Days"}
-      />
 
       <FormInputDropdown
         options={PujaDayOptions}

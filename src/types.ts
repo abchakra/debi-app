@@ -24,11 +24,11 @@ export interface Guest {
     non_vegetarian: number;
     vegetarian: number;
     transport: string;
-    day1: number;
-    day2: number;
-    day3: number | null;
-    day4: number | null;
-    day5: number | null;
+    day1: string;
+    day2: string;
+    day3: string;
+    day4: string;
+    day5: string;
     guestName: string;
     isPresent: boolean;
     isStudent: boolean;

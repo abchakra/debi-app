@@ -1,6 +1,7 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
+  Button,
   Card,
   CardContent,
   Container,
@@ -9,9 +10,11 @@ import {
   Typography
 } from "@mui/material";
 import { onValue, ref } from "firebase/database";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
+import { AuthContext } from "../context/auth-context";
 import { db } from "../firebase/firebase";
 import { GuestTableRow } from "../types";
 
@@ -19,9 +22,9 @@ import { GuestTableRow } from "../types";
 
 
 function Profile() {
-  // const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [guests, setGuests] = useState<GuestTableRow[]>([]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
   const [lunch, setLunch] = useState([0, 0, 0, 0, 0]);
   const [dinner, setDinner] = useState([0, 0, 0, 0, 0]);
@@ -202,7 +205,7 @@ function Profile() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DeBI e.V. DurgaPujo 2024
           </Typography>
-          {/* <Button
+          <Button
             // variant="contained"
             color="inherit"
             onClick={() => {
@@ -211,8 +214,8 @@ function Profile() {
               }
             }}
           >
-            Add GuestTableRow
-          </Button> */}
+            Add Guest
+          </Button>
         </Toolbar>
       </AppBar>
 
