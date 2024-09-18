@@ -71,6 +71,13 @@ const GuestTable = (props: GuestTableProps) => {
             )}
           </span>
         ),
+        editSelectOptions: ["true", "false"],
+        editVariant: "select",
+        // muiEditTextFieldProps: {
+        //   required: true,
+        //   type: 'boolean',
+        //   variant: 'outlined',
+        // },
         Footer: () => <div style={{ display: "flex", flexDirection: "column" }}><span>Paid: {props.paidTotal.toFixed(2)} </span> <span>UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}</span></div>,
       },
       {
@@ -249,7 +256,7 @@ const GuestTable = (props: GuestTableProps) => {
         values.vegetarian = Number(values.vegetarian)
         values.non_vegetarian = Number(values.non_vegetarian)
         values.total = Number(values.total)
-        values.paid = Boolean(values.paid)
+        values.paid = values.paid.toLowerCase() === "true"
 
         //save data to api
 

@@ -1,6 +1,7 @@
 import { Button, Paper, Typography } from "@mui/material";
 import { push, ref } from "firebase/database";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { Guest } from "../types";
 import { FormInputCheckbox } from "./widgets/form-input-checkbox";
@@ -9,6 +10,22 @@ import { FormInputNumber } from "./widgets/form-input-number.";
 import { FormInputText } from "./widgets/form-input-text";
 // Import firebase configuration from firebase.ts file
 
+
+
+const PujaDay5Options = [
+  {
+    label: "None",
+    value: "None",
+  },
+  {
+    label: "Sindoor khela",
+    value: "Sindoor khela",
+  },
+  {
+    label: "Visitor",
+    value: "Visitor",
+  },
+];
 
 const PujaDayOptions = [
   {
@@ -77,7 +94,7 @@ const GuestForm = () => {
   const { handleSubmit, reset, control, setValue } = useForm<IFormInput>({
     defaultValues: defaultValues,
   });
-
+  const navigate = useNavigate();
   const addGuest = (data: IFormInput) => {
     const guestRef = ref(db, "/guests");
     const guest: Guest = {
@@ -100,6 +117,7 @@ const GuestForm = () => {
       total: Number(data.total),
     };
     push(guestRef, guest);
+    navigate("/profile")
   };
 
   const onSubmit = (data: IFormInput) => {
@@ -185,10 +203,15 @@ const GuestForm = () => {
         label="Nobomi"
       />
       <FormInputDropdown
-        options={PujaDayOptions}
+        options={PujaDay5Options}
         name="day5"
         control={control}
         label="Doshomi"
+      />
+      <FormInputCheckbox
+        name="paid"
+        control={control}
+        label="Paid"
       />
       <FormInputNumber
         name={"total"}
