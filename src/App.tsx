@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import GuestDetails from "./components/guest-details";
 import GuestForm from "./components/guest-form";
 import RequireAuth from "./components/require-auth";
 import { AuthContext } from "./context/auth-context";
@@ -39,6 +40,14 @@ function App() {
         element={
           <RequireAuth>
             <GuestForm />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="guestdetails"
+        element={
+          <RequireAuth>
+            <GuestDetails />
           </RequireAuth>
         }
       />

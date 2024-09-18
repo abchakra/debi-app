@@ -130,11 +130,11 @@ const GuestForm = () => {
       style={{
         display: "grid",
         gridRowGap: "20px",
-        padding: "20px",
-        margin: "10px 300px",
+        padding: "5px",
+        // margin: "10px 300px",
       }}
     >
-      <Typography variant="h4"> Form Demo</Typography>
+      <Typography variant="h4"> Add Guest</Typography>
 
       <FormInputText name="guestName" control={control} label="Guest Name" />
 
@@ -225,6 +225,9 @@ const GuestForm = () => {
       </Button>
       <Button onClick={() => reset()} variant={"outlined"}>
         Reset
+      </Button>
+      <Button onClick={() => navigate('/profile')} variant={"outlined"}>
+        Cancel
       </Button>
     </Paper>
   );

@@ -12,6 +12,7 @@ import {
   type MRT_ColumnDef
 } from "material-react-table";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from '../firebase/firebase';
 import { GuestTableRow } from "../types";
 interface GuestTableProps {
@@ -29,6 +30,8 @@ const csvConfig = mkConfig({
 
 
 const GuestTable = (props: GuestTableProps) => {
+
+  const navigate = useNavigate()
   // const writeUserData = (refId: string) => {
   //   console.log(refId);
   //   update(ref(db, "guests/" + refId), {
@@ -43,7 +46,14 @@ const GuestTable = (props: GuestTableProps) => {
   //     });
   // };
 
-
+  const displayGuest = (guestId: string) => {
+    // console.log(guestId);
+    navigate("/guestdetails", {
+      state: {
+        guestId: guestId,
+      },
+    })
+  };
 
 
   const handleExportData = () => {
@@ -239,14 +249,14 @@ const GuestTable = (props: GuestTableProps) => {
     onEditingRowCancel: () => {
       //clear any validation errors
     },
-    // muiTableBodyRowProps: ({ row }) => ({
-    //   onClick: (event) => {
-    //     writeUserData(row.original.id)
-    //   },
-    //   sx: {
-    //     cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-    //   },
-    // }),
+    muiTableBodyRowProps: ({ row }) => ({
+      onClick: (event) => {
+        displayGuest(row.original.id)
+      },
+      sx: {
+        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+      },
+    }),
     onEditingRowSave: ({ row, table, values, }) => {
       //validate data
 
