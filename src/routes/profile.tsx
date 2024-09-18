@@ -209,9 +209,9 @@ function Profile() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DeBI e.V. DurgaPujo 2024
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Current User:{currentUser?.email}
-          </Typography>
+          </Typography> */}
           {isAdmin ?
             <Button
               // variant="contained"
