@@ -152,8 +152,13 @@ const GuestForm = () => {
         label={"Non Vegetarian"}
       />
 
-      <FormInputCheckbox name={"isPaid"} control={control} label={"Paid"} />
-
+      {/* <FormInputCheckbox name={"isPaid"} control={control} label={"Paid"} /> */}
+      <FormInputText
+        name={"email"}
+        control={control}
+        setValue={setValue}
+        label={"email"}
+      />
 
       <FormInputDropdown
         options={PujaDayOptions}

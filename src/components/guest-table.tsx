@@ -18,6 +18,7 @@ interface GuestTableProps {
   guests: GuestTableRow[];
   total: number;
   paidTotal: number
+  isAdmin:boolean
 }
 
 const csvConfig = mkConfig({
@@ -221,7 +222,7 @@ const GuestTable = (props: GuestTableProps) => {
     //   // console.log(table.getFilteredRowModel().rows)
     // },
     editDisplayMode: 'row',
-    // enableEditing: true,
+    enableEditing: props.isAdmin,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="Edit">

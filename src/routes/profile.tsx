@@ -22,7 +22,9 @@ import { GuestTableRow } from "../types";
 
 
 function Profile() {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, signOut } = useContext(AuthContext);
+
+  const [isAdmin] = useState(currentUser?.email === "admin@gmail.com");
   const [guests, setGuests] = useState<GuestTableRow[]>([]);
   const navigate = useNavigate();
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
@@ -37,6 +39,8 @@ function Profile() {
 
   const [total, setTotal] = useState(0);
   const [paidTotal, setPaidTotal] = useState(0);
+
+
 
   const updateValue = (
     value: string,
@@ -205,16 +209,30 @@ function Profile() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DeBI e.V. DurgaPujo 2024
           </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Current User:{currentUser?.email}
+          </Typography>
+          {isAdmin ?
+            <Button
+              // variant="contained"
+              color="inherit"
+              onClick={() => {
+                if (currentUser) {
+                  navigate("/addguest");
+                }
+              }}
+            >
+              Add Guest
+            </Button> : <></>
+
+          }
+
           <Button
             // variant="contained"
             color="inherit"
-            onClick={() => {
-              if (currentUser) {
-                navigate("/addguest");
-              }
-            }}
+            onClick={() => signOut()}
           >
-            Add Guest
+            SignOut
           </Button>
         </Toolbar>
       </AppBar>
@@ -236,7 +254,7 @@ function Profile() {
       <Card sx={{}}>
         <CardContent>
           {guests.length > 0 ? (
-            <GuestTable guests={guests} total={total} paidTotal={paidTotal}></GuestTable>
+            <GuestTable guests={guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
           ) : (
             <></>
           )}

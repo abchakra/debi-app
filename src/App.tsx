@@ -18,8 +18,10 @@ function App() {
     if (currentUser) {
       navigate("/profile");
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentUser]);
+
+
 
   return (
     <Routes>
