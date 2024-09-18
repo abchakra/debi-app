@@ -194,7 +194,7 @@ function Profile() {
   }, []);
 
   return (
-    <Container sx={{ padding: 2, margin: 2 }} maxWidth={false}>
+    <Container sx={{ padding: "1", margin: 0 }} maxWidth={false}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
