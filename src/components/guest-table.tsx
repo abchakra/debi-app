@@ -18,7 +18,7 @@ interface GuestTableProps {
   guests: GuestTableRow[];
   total: number;
   paidTotal: number
-  isAdmin:boolean
+  isAdmin: boolean
 }
 
 const csvConfig = mkConfig({
@@ -29,34 +29,20 @@ const csvConfig = mkConfig({
 
 
 const GuestTable = (props: GuestTableProps) => {
+  // const writeUserData = (refId: string) => {
+  //   console.log(refId);
+  //   update(ref(db, "guests/" + refId), {
+  //     paid: false,
+  //   })
+  //     .then(() => {
+  //       console.log("Data updated successfully");
+  //     })
+  //     .catch((error: any) => {
+  //       console.log("Unsuccessful");
+  //       console.log(error);
+  //     });
+  // };
 
-  // const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
-  //   [],
-  // );
-
-
-  //this kind of logic would actually live on a server, not client-side
-  // useEffect(() => {
-  //   if (columnFilters?.length) {
-  //     // let filteredRows = [...data];
-  //     // columnFilters.map((filter) => {
-  //     //   const { id: columnId, value: filterValue } = filter;
-  //     //   filteredRows = filteredRows.filter((row) => {
-  //     //     return row[columnId as keyof typeof row]
-  //     //       ?.toString()
-  //     //       ?.toLowerCase()
-  //     //       ?.includes?.((filterValue as string).toLowerCase());
-  //     //   });
-  //     // });
-  //     // setRows(filteredRows);
-
-  //     console.log(table.getFilteredRowModel().rows)
-  //   }
-  //   // else {
-  //   //   setRows([...data]);
-  //   // }
-
-  // }, [columnFilters]);
 
 
 
@@ -71,6 +57,28 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "guestName", //access nested data with dot notatio
         header: "Guest Name",
         size: 100,
+      }, {
+        accessorKey: "paid",
+        header: "Paid",
+        size: 50,
+
+        Cell: ({ cell }) => (
+          <span>
+            {cell.getValue<boolean>() ? (
+              <PaidIcon htmlColor="green" />
+            ) : (
+              <PaidIcon htmlColor="red" />
+            )}
+          </span>
+        ),
+        Footer: () => <div style={{ display: "flex", flexDirection: "column" }}><span>Paid: {props.paidTotal.toFixed(2)} </span> <span>UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}</span></div>,
+      },
+      {
+        accessorKey: "total",
+        header: "Total",
+        size: 50,
+        filterVariant: 'range',
+        Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
       },
       {
         accessorKey: "adults", //normal accessorKey
@@ -174,29 +182,7 @@ const GuestTable = (props: GuestTableProps) => {
         ],
         filterVariant: 'multi-select',
       },
-      {
-        accessorKey: "paid",
-        header: "Paid",
-        size: 50,
 
-        Cell: ({ cell }) => (
-          <span>
-            {cell.getValue<boolean>() ? (
-              <PaidIcon htmlColor="green" />
-            ) : (
-              <PaidIcon htmlColor="red" />
-            )}
-          </span>
-        ),
-        Footer: () => <div style={{ display: "flex", flexDirection: "column" }}><span>Paid: {props.paidTotal.toFixed(2)} </span> <span>UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}</span></div>,
-      },
-      {
-        accessorKey: "total",
-        header: "Total",
-        size: 50,
-        filterVariant: 'range',
-        Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
-      },
       {
         accessorKey: "email",
         header: "EMail",
@@ -246,6 +232,14 @@ const GuestTable = (props: GuestTableProps) => {
     onEditingRowCancel: () => {
       //clear any validation errors
     },
+    // muiTableBodyRowProps: ({ row }) => ({
+    //   onClick: (event) => {
+    //     writeUserData(row.original.id)
+    //   },
+    //   sx: {
+    //     cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+    //   },
+    // }),
     onEditingRowSave: ({ row, table, values, }) => {
       //validate data
 
