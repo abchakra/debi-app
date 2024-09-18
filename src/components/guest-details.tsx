@@ -33,7 +33,7 @@ const GuestDetails = () => {
         style={{
             display: "grid",
             gridRowGap: "20px",
-            padding: "5px",
+            padding: "15px",
         }}
     >
         <Typography>Name: {guest.guestName}</Typography>
