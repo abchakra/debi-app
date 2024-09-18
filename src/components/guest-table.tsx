@@ -1,5 +1,4 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
 
@@ -37,7 +36,7 @@ const GuestTable = (props: GuestTableProps) => {
     // console.log(guestId);
     navigate("/guestdetails", {
       state: {
-        guestId: guestId,
+        guestId: guestId, isAdmin: props.isAdmin
       },
     })
   };
@@ -215,11 +214,11 @@ const GuestTable = (props: GuestTableProps) => {
     enableEditing: props.isAdmin,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="Edit">
+        {/* <Tooltip title="Edit">
           <IconButton onClick={() => table.setEditingRow(row)}>
             <EditIcon />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         <Tooltip title="Delete">
           <IconButton color="error" onClick={() => {
 

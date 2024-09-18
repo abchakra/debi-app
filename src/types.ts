@@ -1,21 +1,4 @@
-// export type Guest = {
-//     guestName: string;
-//     isPresent: boolean;
-//     adults: number;
-//     children: number;
-//     isStudent: boolean;
-//     isVeg: boolean;
-//     isCar: boolean;
-//     total: number;
-//     paid: boolean;
-//     day1: number;
-//     day2: number;
-//     day3: number;
-//     day4: number;
-//     day5: number;
-//     all5days: boolean;
-//     message: string;
-// };
+
 
 export interface Guest {
     email: string;
@@ -29,6 +12,11 @@ export interface Guest {
     day3: string;
     day4: string;
     day5: string;
+    attendence_day1: boolean;
+    attendence_day2: boolean;
+    attendence_day3: boolean;
+    attendence_day4: boolean;
+    attendence_day5: boolean;
     guestName: string;
     isPresent: boolean;
     isStudent: boolean;

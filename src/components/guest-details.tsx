@@ -12,6 +12,12 @@ const GuestDetails = () => {
     const navigate = useNavigate()
     const [guest, setGuest] = useState<Guest>()
 
+    // const [day1, setDay1] = useState(false)
+    // const [day2, setDay2] = useState(false)
+    // const [day3, setDay3] = useState(false)
+    // const [day4, setDay4] = useState(false)
+    // const [day5, setDay5] = useState(false)
+
     useEffect(() => {
         const refId = location.state.guestId
         onValue(ref(db, "/guests/" + refId), (snapshot) => {
@@ -53,7 +59,7 @@ const GuestDetails = () => {
         <Typography>Total: {guest.total}</Typography>
         <Typography>Message: {guest.message}</Typography>
 
-
+        {location.state.isAdmin ? <Button onClick={() => navigate('/addguest', { state: { guest: guest, refId: location.state.guestId } })}>Edit</Button> : null}
         <Button onClick={() => navigate('/profile')}>Back</Button>
 
     </Paper>

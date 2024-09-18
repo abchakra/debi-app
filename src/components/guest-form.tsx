@@ -1,7 +1,8 @@
 import { Button, Paper, Typography } from "@mui/material";
-import { push, ref } from "firebase/database";
+import { push, ref, update } from "firebase/database";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { Guest } from "../types";
 import { FormInputCheckbox } from "./widgets/form-input-checkbox";
@@ -26,6 +27,16 @@ const PujaDay5Options = [
     value: "Visitor",
   },
 ];
+const TransportOptions =
+  [{
+    label: "Car",
+    value: "Car",
+  },
+  {
+    label: "Public",
+    value: "Public Transportation",
+  },]
+
 
 const PujaDayOptions = [
   {
@@ -33,7 +44,7 @@ const PujaDayOptions = [
     value: "None",
   },
   {
-    label: "Full day",
+    label: "Full Day",
     value: "Full Day",
   },
   {
@@ -74,7 +85,7 @@ const defaultValues = {
   email: "",
   adults: 1,
   children: 0,
-  non_vegetarian: 0,
+  non_vegetarian: 1,
   vegetarian: 0,
   day1: "None",
   day2: "None",
@@ -87,16 +98,24 @@ const defaultValues = {
   isStudent: false,
   message: "",
   paid: false,
-  total: 0,
+  total: 25,
 };
 
 const GuestForm = () => {
+
+  const location = useLocation();
+
   const { handleSubmit, reset, control, setValue } = useForm<IFormInput>({
     defaultValues: defaultValues,
   });
+
+  useEffect(() => {
+    if (location.state)
+      reset(location.state.guest)
+  }, [reset, location])
+
   const navigate = useNavigate();
   const addGuest = (data: IFormInput) => {
-    const guestRef = ref(db, "/guests");
     const guest: Guest = {
       email: data.email,
       adults: Number(data.adults),
@@ -116,7 +135,21 @@ const GuestForm = () => {
       paid: Boolean(data.paid),
       total: Number(data.total),
     };
-    push(guestRef, guest);
+    if (location.state.refId) {
+
+      update(ref(db, "guests/" + location.state.refId), guest)
+        .then(() => {
+          console.log("Data updated successfully");
+        })
+        .catch((error: any) => {
+          console.log("Unsuccessful");
+          console.log(error);
+        });
+    } else {
+      const guestRef = ref(db, "/guests");
+
+      push(guestRef, guest);
+    }
     navigate("/profile")
   };
 
@@ -134,7 +167,7 @@ const GuestForm = () => {
         // margin: "10px 300px",
       }}
     >
-      <Typography variant="h4"> Add Guest</Typography>
+      <Typography variant="h4"> {location.state ? "Edit Guest" : "Add Guest"}</Typography>
 
       <FormInputText name="guestName" control={control} label="Guest Name" />
 
@@ -176,6 +209,12 @@ const GuestForm = () => {
         control={control}
         setValue={setValue}
         label={"email"}
+      />
+      <FormInputDropdown
+        options={TransportOptions}
+        name="transport"
+        control={control}
+        label="Transportation"
       />
 
       <FormInputDropdown

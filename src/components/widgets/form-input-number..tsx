@@ -29,6 +29,7 @@ export const FormInputNumber = ({ name, control, label }: FormInputProps) => {
           onChange={onChange}
           fullWidth
           label={label}
+          value={value}
           type="number"
           variant="outlined"
 
