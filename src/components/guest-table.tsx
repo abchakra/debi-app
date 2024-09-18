@@ -32,19 +32,6 @@ const csvConfig = mkConfig({
 const GuestTable = (props: GuestTableProps) => {
 
   const navigate = useNavigate()
-  // const writeUserData = (refId: string) => {
-  //   console.log(refId);
-  //   update(ref(db, "guests/" + refId), {
-  //     paid: false,
-  //   })
-  //     .then(() => {
-  //       console.log("Data updated successfully");
-  //     })
-  //     .catch((error: any) => {
-  //       console.log("Unsuccessful");
-  //       console.log(error);
-  //     });
-  // };
 
   const displayGuest = (guestId: string) => {
     // console.log(guestId);
@@ -250,7 +237,7 @@ const GuestTable = (props: GuestTableProps) => {
       //clear any validation errors
     },
     muiTableBodyRowProps: ({ row }) => ({
-      onClick: (event) => {
+      onDoubleClick: (event) => {
         displayGuest(row.original.id)
       },
       sx: {
