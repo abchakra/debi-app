@@ -1,13 +1,14 @@
-import { Avatar, FormControl, FormControlLabel, FormLabel, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
+import { Avatar, Button, FormControl, FormControlLabel, FormLabel, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
 import List from '@mui/material/List';
 import React, { useContext } from 'react';
 import { GuestContext } from '../store/guest-context';
 
 import PaidIcon from "@mui/icons-material/Paid";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function GuestList() {
-
+    const navigate = useNavigate()
     const guestsCtx = useContext(GuestContext);
     const [value, setValue] = React.useState('4');
 
@@ -77,6 +78,8 @@ export default function GuestList() {
 
 
             </List>
+
+            <Button onClick={() => navigate('/profile')}>Back</Button>
         </Paper>
     );
 }

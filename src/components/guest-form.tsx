@@ -135,7 +135,7 @@ const GuestForm = () => {
       paid: Boolean(data.paid),
       total: Number(data.total),
     };
-    if (location.state.refId) {
+    if (location.state) {
 
       update(ref(db, "guests/" + location.state.refId), guest)
         .then(() => {
