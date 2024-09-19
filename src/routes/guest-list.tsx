@@ -1,10 +1,11 @@
-import { Avatar, Button, FormControl, FormControlLabel, FormLabel, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
+import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
 import List from '@mui/material/List';
 import React, { useContext } from 'react';
 import { GuestContext } from '../store/guest-context';
 
 import PaidIcon from "@mui/icons-material/Paid";
 import { useNavigate } from 'react-router-dom';
+import { GuestTableRow } from '../types';
 
 const compareStrings = (a: string, b: string) => {
     if (a < b) return -1;
@@ -22,6 +23,22 @@ export default function GuestList() {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue((event.target as HTMLInputElement).value);
     };
+
+    function getDay(g: GuestTableRow): React.ReactNode {
+        switch (value) {
+            case '1':
+                return g.day1;
+            case '2':
+                return g.day2;
+            case '3':
+                return g.day3;
+            case '4':
+                return g.day4;
+            case '5':
+                return g.day5 === "Sindoor khela" ? "Full Day" : g.day5;
+
+        }
+    }
 
     return (
         <Paper
@@ -61,23 +78,26 @@ export default function GuestList() {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={g.guestName} secondary={<React.Fragment>
-                            {/* <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                    >
-                        Adults {g.adults}
-                        Children {g.children}
-                    </Typography> */}
-                            <div style={{ display: "flex", flexDirection: 'column' }}>
-                                <span>Adults: {g.adults}</span>
-                                <span>Children: {g.children}</span>
-                                <span>Total: {g.total}</span>
-                                <span>Veg: {g.vegetarian}</span>
-                                <span>Non-Veg: {g.non_vegetarian}</span>
-
-                            </div>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <span>Adults: {g.adults}</span>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <span>Children: {g.children}</span>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <span>Veg: {g.vegetarian}</span>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <span>Non-Veg: {g.non_vegetarian}</span>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <span>Total: {g.total}</span>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <span>{getDay(g)}</span>
+                                </Grid>
+                            </Grid>
 
                         </React.Fragment>} />
                     </ListItem>
