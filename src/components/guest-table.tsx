@@ -204,21 +204,13 @@ const GuestTable = (props: GuestTableProps) => {
     enableColumnFilters: true,
     initialState: {
       density: "compact",
-      // columnFilters: columnFilters,
+      pagination: { pageSize: 100, pageIndex: 0 }
     },
-    // onColumnFiltersChange: (updater) => {
-    //   setColumnFilters(updater)
-    //   // console.log(table.getFilteredRowModel().rows)
-    // },
+
     editDisplayMode: 'row',
     enableEditing: props.isAdmin,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        {/* <Tooltip title="Edit">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip> */}
         <Tooltip title="Delete">
           <IconButton color="error" onClick={() => {
 
