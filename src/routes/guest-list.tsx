@@ -6,6 +6,13 @@ import { GuestContext } from '../store/guest-context';
 import PaidIcon from "@mui/icons-material/Paid";
 import { useNavigate } from 'react-router-dom';
 
+const compareStrings = (a: string, b: string) => {
+    if (a < b) return -1;
+    if (a > b) return 1;
+
+    return 0;
+}
+
 
 export default function GuestList() {
     const navigate = useNavigate()
@@ -41,11 +48,12 @@ export default function GuestList() {
                 </RadioGroup>
             </FormControl>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                {guestsCtx && guestsCtx.guests.filter(g => (value === "1" && g.day1 !== "None")
+                {guestsCtx && guestsCtx.guests.sort((a, b) => compareStrings(a.guestName, b.guestName)).filter(g => (value === "1" && g.day1 !== "None")
                     || (value === "2" && g.day2 !== "None")
                     || (value === "3" && g.day3 !== "None")
                     || (value === "4" && g.day4 !== "None")
                     || (value === "5" && g.day5 !== "None"))
+
                     .map(g => <ListItem key={g.email}>
                         <ListItemAvatar>
                             <Avatar>
