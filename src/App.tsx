@@ -4,8 +4,10 @@ import GuestDetails from "./components/guest-details";
 import GuestForm from "./components/guest-form";
 import RequireAuth from "./components/require-auth";
 import { AuthContext } from "./context/auth-context";
+import GuestList from "./routes/guest-list";
 import Home from "./routes/home";
 import Profile from "./routes/profile";
+import GuestProvider from "./store/guest-context";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -25,33 +27,44 @@ function App() {
 
 
   return (
-    <Routes>
-      <Route index element={<Home />} />
-      <Route
-        path="profile"
-        element={
-          <RequireAuth>
-            <Profile />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="addguest"
-        element={
-          <RequireAuth>
-            <GuestForm />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="guestdetails"
-        element={
-          <RequireAuth>
-            <GuestDetails />
-          </RequireAuth>
-        }
-      />
-    </Routes>
+
+    <GuestProvider>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="addguest"
+          element={
+            <RequireAuth>
+              <GuestForm />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="guestdetails"
+          element={
+            <RequireAuth>
+              <GuestDetails />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="guestlist"
+          element={
+            <RequireAuth>
+              <GuestList />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </GuestProvider>
   );
 }
 

@@ -16,6 +16,7 @@ import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
 import { AuthContext } from "../context/auth-context";
 import { db } from "../firebase/firebase";
+import { GuestContext } from "../store/guest-context";
 import { GuestTableRow } from "../types";
 
 
@@ -25,7 +26,12 @@ function Profile() {
   const { currentUser, signOut } = useContext(AuthContext);
 
   const [isAdmin] = useState(currentUser?.email === "admin@gmail.com");
-  const [guests, setGuests] = useState<GuestTableRow[]>([]);
+
+
+  const guestsCtx = useContext(GuestContext);
+
+
+  // const [guests, setGuests] = useState<GuestTableRow[]>([]);
   const navigate = useNavigate();
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
   const [lunch, setLunch] = useState([0, 0, 0, 0, 0]);
@@ -104,6 +110,9 @@ function Profile() {
           if (data[id].paid) {
             totalPayment += data[id].total;
           }
+
+
+          console.log(data[id].day1, data[id].day2,)
           updateValue(
             data[id].day1,
             0,
@@ -177,7 +186,9 @@ function Profile() {
         }
         setTotal(totalTicketsSold);
         setPaidTotal(totalPayment)
-        setGuests(newGuestList);
+        if (guestsCtx) {
+          guestsCtx.setGuests(newGuestList)
+        }
         setFullDay(fullDay);
         setLunch(lunch);
         setDinner(dinner);
@@ -191,7 +202,7 @@ function Profile() {
         // console.log(newGuestList);
       }
     });
-  }, []);
+  }, [guestsCtx]);
 
   return (
     <Container disableGutters sx={{ padding: "1px", margin: 0 }} maxWidth={false}>
@@ -209,6 +220,17 @@ function Profile() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DeBI e.V. DurgaPujo 2024
           </Typography>
+
+          <Button
+            color="inherit"
+            onClick={() => {
+              if (currentUser) {
+                navigate("/guestlist");
+              }
+            }}
+          >
+            Guest List
+          </Button>
           {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Current User:{currentUser?.email}
           </Typography> */}
@@ -253,8 +275,8 @@ function Profile() {
       </Card>
       <Card sx={{}}>
         <CardContent>
-          {guests.length > 0 ? (
-            <GuestTable guests={guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
+          {guestsCtx && guestsCtx.guests.length > 0 ? (
+            <GuestTable guests={guestsCtx.guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
           ) : (
             <></>
           )}
