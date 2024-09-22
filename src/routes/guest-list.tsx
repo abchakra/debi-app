@@ -1,24 +1,25 @@
+import PaidIcon from "@mui/icons-material/Paid";
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
 import List from '@mui/material/List';
 import React, { useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { GuestContext } from '../store/guest-context';
-
-import PaidIcon from "@mui/icons-material/Paid";
-import { useNavigate } from 'react-router-dom';
 import { GuestTableRow } from '../types';
-
 const compareStrings = (a: string, b: string) => {
     if (a < b) return -1;
     if (a > b) return 1;
 
     return 0;
 }
-
-
-export default function GuestList() {
+interface GuestListProps { }
+export default function GuestList(props: GuestListProps) {
     const navigate = useNavigate()
+    const location = useLocation()
+
     const guestsCtx = useContext(GuestContext);
     const [value, setValue] = React.useState('4');
+
+    const [time, setTime] = React.useState('Lunch');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue((event.target as HTMLInputElement).value);
@@ -64,12 +65,45 @@ export default function GuestList() {
                     <FormControlLabel value="5" control={<Radio />} label="Doshomi" />
                 </RadioGroup>
             </FormControl>
+
+            <FormControl>
+                <FormLabel id="radio-buttons-group">Day</FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={time}
+                    onChange={(e) => setTime((e.target as HTMLInputElement).value)}
+                >
+                    <FormControlLabel value="Lunch" control={<Radio />} label="Lunch" />
+                    <FormControlLabel value="Full day" control={<Radio />} label="Full Day" />
+                    <FormControlLabel value="Dinner" control={<Radio />} label="Dinner" />
+                    <FormControlLabel value="Visitor" control={<Radio />} label="Visitor" />
+                </RadioGroup>
+            </FormControl>
+
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                {guestsCtx && guestsCtx.guests.sort((a, b) => compareStrings(a.guestName, b.guestName)).filter(g => (value === "1" && g.day1 !== "None")
-                    || (value === "2" && g.day2 !== "None")
-                    || (value === "3" && g.day3 !== "None")
-                    || (value === "4" && g.day4 !== "None")
-                    || (value === "5" && g.day5 !== "None"))
+                {guestsCtx && guestsCtx.guests.sort((a, b) => compareStrings(a.guestName, b.guestName))
+                    .filter(g => {
+
+                        console.log(value, time, g.guestName, g.attendence_day1)
+                        if ((value === "1" && g.day1.localeCompare(time) === 0)
+                            || (value === "2" && g.day2.localeCompare(time) === 0)
+                            || (value === "3" && g.day3.localeCompare(time) === 0)
+                            || (value === "4" && g.day4.localeCompare(time) === 0)) {
+                            return true;
+                        } else if (value === "5") {
+                            if (time === "Full day" && g.day5 === 'Sindoor khela') {
+                                return true
+                            } else if (time === "Visitor" && g.day5 === 'Visitor') {
+                                return true
+                            }
+                        }
+                        return false;
+                    }
+
+
+                    )
 
                     .map(g => <ListItem key={g.email}>
                         <ListItemAvatar>
@@ -98,7 +132,12 @@ export default function GuestList() {
                                     <span>{getDay(g)}</span>
                                 </Grid>
                             </Grid>
-
+                            {location.state.isAdmin ?
+                                <Button onClick={() => navigate("/guestdetails", {
+                                    state: {
+                                        guestId: g.id
+                                    },
+                                })}>Edit</Button> : null}
                         </React.Fragment>} />
                     </ListItem>
 

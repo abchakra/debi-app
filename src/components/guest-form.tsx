@@ -61,25 +61,7 @@ const PujaDayOptions = [
   },
 ];
 
-interface IFormInput {
-  email: string;
-  adults: number;
-  children: number;
-  non_vegetarian: number;
-  transport: string;
-  vegetarian: number;
-  day1: string;
-  day2: string;
-  day3: string;
-  day4: string;
-  day5: string;
-  guestName: string;
-  isPresent: boolean;
-  isStudent: boolean;
-  message: string;
-  paid: boolean;
-  total: number;
-}
+
 
 const defaultValues = {
   email: "",
@@ -96,6 +78,11 @@ const defaultValues = {
   transport: "Car",
   isPresent: false,
   isStudent: false,
+  attendence_day1: false,
+  attendence_day2: false,
+  attendence_day3: false,
+  attendence_day4: false,
+  attendence_day5: false,
   message: "",
   paid: false,
   total: 25,
@@ -105,7 +92,7 @@ const GuestForm = () => {
 
   const location = useLocation();
 
-  const { handleSubmit, reset, control, setValue } = useForm<IFormInput>({
+  const { handleSubmit, reset, control, setValue } = useForm<Guest>({
     defaultValues: defaultValues,
   });
 
@@ -115,29 +102,34 @@ const GuestForm = () => {
   }, [reset, location])
 
   const navigate = useNavigate();
-  const addGuest = (data: IFormInput) => {
-    const guest: Guest = {
-      email: data.email,
-      adults: Number(data.adults),
-      children: Number(data.children),
-      non_vegetarian: Number(data.non_vegetarian),
-      vegetarian: Number(data.vegetarian),
-      day1: data.day1,
-      day2: data.day2,
-      day3: data.day3,
-      day4: data.day4,
-      day5: data.day5,
-      transport: data.transport,
-      guestName: data.guestName,
-      isPresent: data.isPresent,
-      isStudent: data.isStudent,
-      message: data.message,
-      paid: Boolean(data.paid),
-      total: Number(data.total),
-    };
+  const addGuest = (data: Guest) => {
+    // const guest: Guest = {
+    //   email: data.email,
+    //   adults: Number(data.adults),
+    //   children: Number(data.children),
+    //   non_vegetarian: Number(data.non_vegetarian),
+    //   vegetarian: Number(data.vegetarian),
+    //   day1: data.day1,
+    //   day2: data.day2,
+    //   day3: data.day3,
+    //   day4: data.day4,
+    //   day5: data.day5,
+    //   transport: data.transport,
+    //   guestName: data.guestName,
+    //   isPresent: data.isPresent,
+    //   isStudent: data.isStudent,
+    //   message: data.message,
+    //   paid: Boolean(data.paid),
+    //   total: Number(data.total),
+    //   attendence_day1: Boolean(data.attendence_day1),
+    //   attendence_day2: false,
+    //   attendence_day3: false,
+    //   attendence_day4: false,
+    //   attendence_day5: false,
+    // };
     if (location.state) {
 
-      update(ref(db, "guests/" + location.state.refId), guest)
+      update(ref(db, "guests/" + location.state.refId), data)
         .then(() => {
           console.log("Data updated successfully");
         })
@@ -148,12 +140,12 @@ const GuestForm = () => {
     } else {
       const guestRef = ref(db, "/guests");
 
-      push(guestRef, guest);
+      push(guestRef, data);
     }
     navigate("/profile")
   };
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = (data: Guest) => {
     console.log(data);
 
     addGuest(data);
@@ -257,6 +249,31 @@ const GuestForm = () => {
         control={control}
         setValue={setValue}
         label={"Total"}
+      />
+      <FormInputCheckbox
+        name="attendence_day1"
+        control={control}
+        label="Day1 Attendance"
+      />
+      <FormInputCheckbox
+        name="attendence_day2"
+        control={control}
+        label="Day2 Attendance"
+      />
+      <FormInputCheckbox
+        name="attendence_day3"
+        control={control}
+        label="Day3 Attendance"
+      />
+      <FormInputCheckbox
+        name="attendence_day4"
+        control={control}
+        label="Day4 Attendance"
+      />
+      <FormInputCheckbox
+        name="attendence_day5"
+        control={control}
+        label="Day5 Attendance"
       />
 
       <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>

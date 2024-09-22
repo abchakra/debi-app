@@ -12,11 +12,11 @@ export interface Guest {
     day3: string;
     day4: string;
     day5: string;
-    // attendence_day1: boolean;
-    // attendence_day2: boolean;
-    // attendence_day3: boolean;
-    // attendence_day4: boolean;
-    // attendence_day5: boolean;
+    attendence_day1: boolean;
+    attendence_day2: boolean;
+    attendence_day3: boolean;
+    attendence_day4: boolean;
+    attendence_day5: boolean;
     guestName: string;
     isPresent: boolean;
     isStudent: boolean;
@@ -39,6 +39,11 @@ export type GuestTableRow = {
     day3: string;
     day4: string;
     day5: string;
+    attendence_day1: boolean;
+    attendence_day2: boolean;
+    attendence_day3: boolean;
+    attendence_day4: boolean;
+    attendence_day5: boolean;
     guestName: string;
     isPresent: boolean;
     isStudent: boolean;

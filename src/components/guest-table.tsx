@@ -1,7 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
-
 import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
 import { download, generateCsv, mkConfig } from 'export-to-csv';
 import { ref, remove, update } from 'firebase/database';
@@ -204,7 +203,7 @@ const GuestTable = (props: GuestTableProps) => {
     enableColumnFilters: true,
     initialState: {
       density: "compact",
-      pagination: { pageSize: 100, pageIndex: 0 }
+      pagination: { pageSize: 200, pageIndex: 0 }
     },
 
     editDisplayMode: 'row',

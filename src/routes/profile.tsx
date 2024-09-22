@@ -112,7 +112,7 @@ function Profile() {
           }
 
 
-          console.log(data[id].day1, data[id].day2,)
+          // console.log(data[id].day1, data[id].day2,)
           updateValue(
             data[id].day1,
             0,
@@ -225,7 +225,7 @@ function Profile() {
             color="inherit"
             onClick={() => {
               if (currentUser) {
-                navigate("/guestlist");
+                navigate("/guestlist", { state: { isAdmin: isAdmin } });
               }
             }}
           >
