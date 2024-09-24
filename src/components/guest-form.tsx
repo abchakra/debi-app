@@ -103,33 +103,33 @@ const GuestForm = () => {
 
   const navigate = useNavigate();
   const addGuest = (data: Guest) => {
-    // const guest: Guest = {
-    //   email: data.email,
-    //   adults: Number(data.adults),
-    //   children: Number(data.children),
-    //   non_vegetarian: Number(data.non_vegetarian),
-    //   vegetarian: Number(data.vegetarian),
-    //   day1: data.day1,
-    //   day2: data.day2,
-    //   day3: data.day3,
-    //   day4: data.day4,
-    //   day5: data.day5,
-    //   transport: data.transport,
-    //   guestName: data.guestName,
-    //   isPresent: data.isPresent,
-    //   isStudent: data.isStudent,
-    //   message: data.message,
-    //   paid: Boolean(data.paid),
-    //   total: Number(data.total),
-    //   attendence_day1: Boolean(data.attendence_day1),
-    //   attendence_day2: false,
-    //   attendence_day3: false,
-    //   attendence_day4: false,
-    //   attendence_day5: false,
-    // };
+    const guest: Guest = {
+      email: data.email,
+      adults: Number(data.adults),
+      children: Number(data.children),
+      non_vegetarian: Number(data.non_vegetarian),
+      vegetarian: Number(data.vegetarian),
+      day1: data.day1,
+      day2: data.day2,
+      day3: data.day3,
+      day4: data.day4,
+      day5: data.day5,
+      transport: data.transport,
+      guestName: data.guestName,
+      isPresent: data.isPresent,
+      isStudent: data.isStudent,
+      message: data.message,
+      paid: Boolean(data.paid),
+      total: Number(data.total),
+      attendence_day1: Boolean(data.attendence_day1),
+      attendence_day2: Boolean(data.attendence_day2),
+      attendence_day3: Boolean(data.attendence_day3),
+      attendence_day4: Boolean(data.attendence_day4),
+      attendence_day5: Boolean(data.attendence_day5),
+    };
     if (location.state) {
 
-      update(ref(db, "guests/" + location.state.refId), data)
+      update(ref(db, "guests/" + location.state.refId), guest)
         .then(() => {
           console.log("Data updated successfully");
         })

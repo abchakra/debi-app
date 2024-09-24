@@ -83,6 +83,11 @@ function Profile() {
   };
 
   useEffect(() => {
+
+    if (guestsCtx && guestsCtx.guests.length > 0) {
+      return;
+    }
+
     const query = ref(db, "guests");
     return onValue(query, (snapshot) => {
       let totalTicketsSold = 0;
@@ -198,10 +203,12 @@ function Profile() {
         setLunchC(lunchC);
         setDinnerC(dinnerC);
         setVisitorC(visitorC);
+        console.log("ref(db guests")
 
-        // console.log(newGuestList);
       }
     });
+
+
   }, [guestsCtx]);
 
   return (
