@@ -18,11 +18,11 @@ const PujaDay5Options = [
   },
   {
     label: "Sindoor khela",
-    value: "Sindoor khela",
+    value: "sindoor khela",
   },
   {
     label: "Visitor",
-    value: "Visitor",
+    value: "visitor",
   },
 ];
 const TransportOptions = [
@@ -43,19 +43,19 @@ const PujaDayOptions = [
   },
   {
     label: "Full Day",
-    value: "Full Day",
+    value: "full day",
   },
   {
     label: "Lunch Only",
-    value: "Lunch",
+    value: "lunch",
   },
   {
     label: "Dinner Only",
-    value: "Dinner",
+    value: "dinner",
   },
   {
     label: "Visitor",
-    value: "Visitor",
+    value: "visitor",
   },
 ];
 

@@ -54,16 +54,16 @@ function Profile() {
       if (value.toLowerCase().trim() === "full day") {
         fullDay[day] = fullDay[day] + adults;
         fullDayC[day] = fullDayC[day] + children;
-      } else if (value === "Sindoor khela") {
+      } else if (value.toLowerCase().trim() === "sindoor khela") {
         fullDay[day] = fullDay[day] + adults;
         fullDayC[day] = fullDayC[day] + children;
-      } else if (value === "Dinner") {
+      } else if (value.toLowerCase().trim() === "dinner") {
         dinner[day] = dinner[day] + adults;
         dinnerC[day] = dinnerC[day] + children;
-      } else if (value === "Lunch") {
+      } else if (value.toLowerCase().trim() === "lunch") {
         lunch[day] = lunch[day] + adults;
         lunchC[day] = lunchC[day] + children;
-      } else if (value === "Visitor") {
+      } else if (value.toLowerCase().trim() === "visitor") {
         visitor[day] = visitor[day] + adults;
         visitorC[day] = visitorC[day] + children;
       }

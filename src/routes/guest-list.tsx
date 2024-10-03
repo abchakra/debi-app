@@ -24,7 +24,7 @@ const compareStrings = (a: string, b: string) => {
 
   return 0;
 };
-interface GuestListProps {}
+interface GuestListProps { }
 export default function GuestList(props: GuestListProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +39,7 @@ export default function GuestList(props: GuestListProps) {
     setValue((event.target as HTMLInputElement).value);
   };
 
-  function getDay(g: GuestTableRow): React.ReactNode {
+  function getDay(g: GuestTableRow): String {
     switch (value) {
       case "1":
         return g.day1;
@@ -50,8 +50,9 @@ export default function GuestList(props: GuestListProps) {
       case "4":
         return g.day4;
       case "5":
-        return g.day5 === "Sindoor khela" ? "Full Day" : g.day5;
+        return g.day5.toLowerCase().trim() === "sindoor khela" ? "full day" : g.day5;
     }
+    return "None"
   }
 
   return (
@@ -88,15 +89,15 @@ export default function GuestList(props: GuestListProps) {
           value={time}
           onChange={(e) => setTime((e.target as HTMLInputElement).value)}
         >
-          <FormControlLabel value="Lunch" control={<Radio />} label="Lunch" />
+          <FormControlLabel value="lunch" control={<Radio />} label="Lunch" />
           <FormControlLabel
-            value="Full day"
+            value="full day"
             control={<Radio />}
             label="Full Day"
           />
-          <FormControlLabel value="Dinner" control={<Radio />} label="Dinner" />
+          <FormControlLabel value="dinner" control={<Radio />} label="Dinner" />
           <FormControlLabel
-            value="Visitor"
+            value="visitor"
             control={<Radio />}
             label="Visitor"
           />
@@ -116,9 +117,9 @@ export default function GuestList(props: GuestListProps) {
             ) {
               return true;
             } else if (value === "5") {
-              if (time === "Full day" && g.day5 === "Sindoor khela") {
+              if (time.toLowerCase().trim() === "full day" && g.day5.toLowerCase().trim() === "sindoor khela") {
                 return true;
-              } else if (time === "Visitor" && g.day5 === "Visitor") {
+              } else if (time.toLowerCase().trim() === "visitor" && g.day5.toLowerCase().trim() === "visitor") {
                 return true;
               }
             }
@@ -153,7 +154,7 @@ export default function GuestList(props: GuestListProps) {
                         <span>Total: {g.total}</span>
                       </Grid>
                       <Grid item xs={6}>
-                        <span>{getDay(g)}</span>
+                        <span>{getDay(g).toLowerCase().trim()}</span>
                       </Grid>
                     </Grid>
                     {location.state.isAdmin ? (
