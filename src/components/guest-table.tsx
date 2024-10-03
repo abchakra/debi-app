@@ -2,44 +2,42 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PaidIcon from "@mui/icons-material/Paid";
 import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
-import { download, generateCsv, mkConfig } from 'export-to-csv';
-import { ref, remove, update } from 'firebase/database';
+import { download, generateCsv, mkConfig } from "export-to-csv";
+import { ref, remove, update } from "firebase/database";
 import {
   MaterialReactTable,
   useMaterialReactTable,
-  type MRT_ColumnDef
+  type MRT_ColumnDef,
 } from "material-react-table";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from '../firebase/firebase';
+import { db } from "../firebase/firebase";
 import { GuestTableRow } from "../types";
 interface GuestTableProps {
   guests: GuestTableRow[];
   total: number;
-  paidTotal: number
-  isAdmin: boolean
+  paidTotal: number;
+  isAdmin: boolean;
 }
 
 const csvConfig = mkConfig({
-  fieldSeparator: ',',
-  decimalSeparator: '.',
+  fieldSeparator: ",",
+  decimalSeparator: ".",
   useKeysAsHeaders: true,
 });
 
-
 const GuestTable = (props: GuestTableProps) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const displayGuest = (guestId: string) => {
     // console.log(guestId);
     navigate("/guestdetails", {
       state: {
-        guestId: guestId, isAdmin: props.isAdmin
+        guestId: guestId,
+        isAdmin: props.isAdmin,
       },
-    })
+    });
   };
-
 
   const handleExportData = () => {
     const csv = generateCsv(csvConfig)(props.guests);
@@ -52,7 +50,8 @@ const GuestTable = (props: GuestTableProps) => {
         accessorKey: "guestName", //access nested data with dot notatio
         header: "Guest Name",
         size: 100,
-      }, {
+      },
+      {
         accessorKey: "paid",
         header: "Paid",
         size: 50,
@@ -73,13 +72,20 @@ const GuestTable = (props: GuestTableProps) => {
         //   type: 'boolean',
         //   variant: 'outlined',
         // },
-        Footer: () => <div style={{ display: "flex", flexDirection: "column" }}><span>Paid: {props.paidTotal.toFixed(2)} </span> <span>UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}</span></div>,
+        Footer: () => (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span>Paid: {props.paidTotal.toFixed(2)} </span>{" "}
+            <span>
+              UnPaid: {Math.abs(props.total - props.paidTotal).toFixed(2)}
+            </span>
+          </div>
+        ),
       },
       {
         accessorKey: "total",
         header: "Total",
         size: 50,
-        filterVariant: 'range',
+        filterVariant: "range",
         Footer: () => <div>Total: {props.total.toFixed(2)}</div>,
       },
       {
@@ -90,7 +96,7 @@ const GuestTable = (props: GuestTableProps) => {
         AggregatedCell: ({ cell, table }) => (
           <>
             <Box
-              sx={{ color: 'info.main', display: 'inline', fontWeight: 'bold' }}
+              sx={{ color: "info.main", display: "inline", fontWeight: "bold" }}
             >
               {cell.getValue<number>()}
             </Box>
@@ -119,10 +125,10 @@ const GuestTable = (props: GuestTableProps) => {
         header: "Transportation",
         size: 30,
         filterSelectOptions: [
-          { label: 'Car', value: 'Car' },
-          { label: 'Public', value: '	Public Transport' },
+          { label: "Car", value: "Car" },
+          { label: "Public", value: "	Public Transport" },
         ],
-        filterVariant: 'select',
+        filterVariant: "select",
       },
       {
         accessorKey: "day1",
@@ -131,58 +137,58 @@ const GuestTable = (props: GuestTableProps) => {
         filterSelectOptions: [
           // { label: 'Dinner', value: 'Dinner' },
           // { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full day' },
-          { label: 'Visitor', value: 'Visitor' },
+          { label: "Full Day", value: "Full day" },
+          { label: "Visitor", value: "Visitor" },
         ],
-        filterVariant: 'multi-select',
+        filterVariant: "multi-select",
       },
       {
         accessorKey: "day2",
         header: "Saptami",
         size: 50,
         filterSelectOptions: [
-          { label: 'Dinner', value: 'Dinner' },
-          { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full day' },
-          { label: 'Visitor', value: 'Visitor' },
+          { label: "Dinner", value: "Dinner" },
+          { label: "Lunch", value: "Female" },
+          { label: "Full Day", value: "Full day" },
+          { label: "Visitor", value: "Visitor" },
         ],
-        filterVariant: 'multi-select',
+        filterVariant: "multi-select",
       },
       {
         accessorKey: "day3",
         header: "Ashtami",
         size: 50,
         filterSelectOptions: [
-          { label: 'Dinner', value: 'Dinner' },
-          { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full day' },
-          { label: 'Visitor', value: 'Visitor' },
+          { label: "Dinner", value: "Dinner" },
+          { label: "Lunch", value: "Female" },
+          { label: "Full Day", value: "Full day" },
+          { label: "Visitor", value: "Visitor" },
         ],
-        filterVariant: 'multi-select',
+        filterVariant: "multi-select",
       },
       {
         accessorKey: "day4",
         header: "Nabami",
         size: 50,
         filterSelectOptions: [
-          { label: 'Dinner', value: 'Dinner' },
-          { label: 'Lunch', value: 'Female' },
-          { label: 'Full Day', value: 'Full day' },
-          { label: 'Visitor', value: 'Visitor' },
+          { label: "Dinner", value: "Dinner" },
+          { label: "Lunch", value: "Female" },
+          { label: "Full Day", value: "Full day" },
+          { label: "Visitor", value: "Visitor" },
         ],
-        filterVariant: 'multi-select',
+        filterVariant: "multi-select",
       },
       {
         accessorKey: "day5",
         header: "Dashami",
         size: 50,
         filterSelectOptions: [
-          { label: 'Dinner', value: 'Dinner' },
-          { label: 'Lunch', value: 'Female' },
-          { label: 'Sindoor khela', value: 'Sindoor khela' },
-          { label: 'Visitor', value: 'Visitor' },
+          { label: "Dinner", value: "Dinner" },
+          { label: "Lunch", value: "Female" },
+          { label: "Sindoor khela", value: "Sindoor khela" },
+          { label: "Visitor", value: "Visitor" },
         ],
-        filterVariant: 'multi-select',
+        filterVariant: "multi-select",
       },
 
       {
@@ -191,7 +197,7 @@ const GuestTable = (props: GuestTableProps) => {
         size: 30,
       },
     ],
-    [props.total, props.paidTotal]
+    [props.total, props.paidTotal],
   );
 
   const table = useMaterialReactTable({
@@ -203,52 +209,53 @@ const GuestTable = (props: GuestTableProps) => {
     enableColumnFilters: true,
     initialState: {
       density: "compact",
-      pagination: { pageSize: 200, pageIndex: 0 }
+      pagination: { pageSize: 200, pageIndex: 0 },
     },
 
-    editDisplayMode: 'row',
+    editDisplayMode: "row",
     enableEditing: props.isAdmin,
     renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
+      <Box sx={{ display: "flex", gap: "1rem" }}>
         <Tooltip title="Delete">
-          <IconButton color="error" onClick={() => {
-
-            const guestRef = ref(db, "guests/" + row.original.id);
-            remove(guestRef).then(() => console.log("Deleted", row.original.id))
-
-
-          }}>
+          <IconButton
+            color="error"
+            onClick={() => {
+              const guestRef = ref(db, "guests/" + row.original.id);
+              remove(guestRef).then(() =>
+                console.log("Deleted", row.original.id),
+              );
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      </Box >
+      </Box>
     ),
     onEditingRowCancel: () => {
       //clear any validation errors
     },
     muiTableBodyRowProps: ({ row }) => ({
       onDoubleClick: (event) => {
-        displayGuest(row.original.id)
+        displayGuest(row.original.id);
       },
       sx: {
-        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+        cursor: "pointer", //you might want to change the cursor too when adding an onClick
       },
     }),
-    onEditingRowSave: ({ row, table, values, }) => {
+    onEditingRowSave: ({ row, table, values }) => {
       //validate data
 
       try {
-        values.adults = Number(values.adults)
-        values.children = Number(values.children)
-        values.vegetarian = Number(values.vegetarian)
-        values.non_vegetarian = Number(values.non_vegetarian)
-        values.total = Number(values.total)
-        values.paid = values.paid.toLowerCase() === "true"
+        values.adults = Number(values.adults);
+        values.children = Number(values.children);
+        values.vegetarian = Number(values.vegetarian);
+        values.non_vegetarian = Number(values.non_vegetarian);
+        values.total = Number(values.total);
+        values.paid = values.paid.toLowerCase() === "true";
 
         //save data to api
 
-
-        console.log(row.original.id, values)
+        console.log(row.original.id, values);
 
         update(ref(db, "guests/" + row.original.id), values)
           .then(() => {
@@ -259,20 +266,19 @@ const GuestTable = (props: GuestTableProps) => {
             console.log(error);
           });
 
-
         table.setEditingRow(null); //exit editing mode
       } catch (error: any) {
-        console.log(error)
+        console.log(error);
       }
     },
 
     renderTopToolbarCustomActions: ({ table }) => (
       <Box
         sx={{
-          display: 'flex',
-          gap: '16px',
-          padding: '8px',
-          flexWrap: 'wrap',
+          display: "flex",
+          gap: "16px",
+          padding: "8px",
+          flexWrap: "wrap",
         }}
       >
         <Button
@@ -282,21 +288,43 @@ const GuestTable = (props: GuestTableProps) => {
         >
           Export All Data
         </Button>
-
       </Box>
-    )
+    ),
   });
 
+  return (
+    <Box>
+      <Typography>
+        Adults :{" "}
+        {table
+          .getFilteredRowModel()
+          .rows.reduce((result, item) => result + item.original.adults, 0)}
+      </Typography>
+      <Typography>
+        Children :{" "}
+        {table
+          .getFilteredRowModel()
+          .rows.reduce((result, item) => result + item.original.children, 0)}
+      </Typography>
+      <Typography>
+        Veg :{" "}
+        {table
+          .getFilteredRowModel()
+          .rows.reduce((result, item) => result + item.original.vegetarian, 0)}
+      </Typography>
+      <Typography>
+        Non-Veg :{" "}
+        {table
+          .getFilteredRowModel()
+          .rows.reduce(
+            (result, item) => result + item.original.non_vegetarian,
+            0,
+          )}
+      </Typography>
 
-  return <Box>
-    <Typography>Adults : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.adults, 0)}</Typography>
-    <Typography>Children : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.children, 0)}</Typography>
-    <Typography>Veg : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.vegetarian, 0)}</Typography>
-    <Typography>Non-Veg : {table.getFilteredRowModel().rows.reduce((result, item) => result + item.original.non_vegetarian, 0)}</Typography>
-
-
-    <MaterialReactTable table={table} />
-  </Box>;
+      <MaterialReactTable table={table} />
+    </Box>
+  );
 };
 
 export default GuestTable;

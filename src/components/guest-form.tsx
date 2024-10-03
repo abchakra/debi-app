@@ -11,8 +11,6 @@ import { FormInputNumber } from "./widgets/form-input-number.";
 import { FormInputText } from "./widgets/form-input-text";
 // Import firebase configuration from firebase.ts file
 
-
-
 const PujaDay5Options = [
   {
     label: "None",
@@ -27,16 +25,16 @@ const PujaDay5Options = [
     value: "Visitor",
   },
 ];
-const TransportOptions =
-  [{
+const TransportOptions = [
+  {
     label: "Car",
     value: "Car",
   },
   {
     label: "Public",
     value: "Public Transportation",
-  },]
-
+  },
+];
 
 const PujaDayOptions = [
   {
@@ -60,8 +58,6 @@ const PujaDayOptions = [
     value: "Visitor",
   },
 ];
-
-
 
 const defaultValues = {
   email: "",
@@ -89,7 +85,6 @@ const defaultValues = {
 };
 
 const GuestForm = () => {
-
   const location = useLocation();
 
   const { handleSubmit, reset, control, setValue } = useForm<Guest>({
@@ -97,9 +92,8 @@ const GuestForm = () => {
   });
 
   useEffect(() => {
-    if (location.state)
-      reset(location.state.guest)
-  }, [reset, location])
+    if (location.state) reset(location.state.guest);
+  }, [reset, location]);
 
   const navigate = useNavigate();
   const addGuest = (data: Guest) => {
@@ -128,7 +122,6 @@ const GuestForm = () => {
       attendence_day5: Boolean(data.attendence_day5),
     };
     if (location.state) {
-
       update(ref(db, "guests/" + location.state.refId), guest)
         .then(() => {
           console.log("Data updated successfully");
@@ -142,7 +135,7 @@ const GuestForm = () => {
 
       push(guestRef, guest);
     }
-    navigate("/profile")
+    navigate("/profile");
   };
 
   const onSubmit = (data: Guest) => {
@@ -159,7 +152,10 @@ const GuestForm = () => {
         // margin: "10px 300px",
       }}
     >
-      <Typography variant="h4"> {location.state ? "Edit Guest" : "Add Guest"}</Typography>
+      <Typography variant="h4">
+        {" "}
+        {location.state ? "Edit Guest" : "Add Guest"}
+      </Typography>
 
       <FormInputText name="guestName" control={control} label="Guest Name" />
 
@@ -239,11 +235,7 @@ const GuestForm = () => {
         control={control}
         label="Doshomi"
       />
-      <FormInputCheckbox
-        name="paid"
-        control={control}
-        label="Paid"
-      />
+      <FormInputCheckbox name="paid" control={control} label="Paid" />
       <FormInputNumber
         name={"total"}
         control={control}
@@ -282,7 +274,7 @@ const GuestForm = () => {
       <Button onClick={() => reset()} variant={"outlined"}>
         Reset
       </Button>
-      <Button onClick={() => navigate('/profile')} variant={"outlined"}>
+      <Button onClick={() => navigate("/profile")} variant={"outlined"}>
         Cancel
       </Button>
     </Paper>

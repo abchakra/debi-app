@@ -10,8 +10,6 @@ export const FormInputNumber = ({ name, control, label }: FormInputProps) => {
   //   return matches && matches?.length > 0 || "Not a Number";
   // };
 
-
-
   return (
     <Controller
       name={name}
@@ -32,8 +30,6 @@ export const FormInputNumber = ({ name, control, label }: FormInputProps) => {
           value={value}
           type="number"
           variant="outlined"
-
-
         />
       )}
     />

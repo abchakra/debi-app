@@ -21,10 +21,7 @@ function App() {
   //   // eslint-disable-next-line
   // }, [currentUser]);
 
-
-
   return (
-
     <Routes>
       <Route index element={<Home />} />
       <Route

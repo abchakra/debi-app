@@ -3,14 +3,13 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./form-input-props";
 
-
 interface OptionType {
   label: string;
   value: string;
   default?: boolean;
 }
 interface FormInputDropdownProps extends FormInputProps {
-  options: OptionType[]
+  options: OptionType[];
 }
 
 export const FormInputDropdown: React.FC<FormInputDropdownProps> = ({

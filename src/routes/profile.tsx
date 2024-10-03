@@ -7,7 +7,7 @@ import {
   Container,
   IconButton,
   Toolbar,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,13 +15,10 @@ import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
 import { useFirebase } from "../context/firebase-context";
 
-
-
-
 function Profile() {
   const { user, signOutUser, guests } = useFirebase();
 
-  console.log(user, user?.email)
+  console.log(user, user?.email);
 
   const [isAdmin] = useState(user ? user.email === "admin@gmail.com" : false);
 
@@ -39,8 +36,6 @@ function Profile() {
   const [total, setTotal] = useState(0);
   const [paidTotal, setPaidTotal] = useState(0);
 
-
-
   const updateValue = (
     value: string,
     day: number,
@@ -53,7 +48,7 @@ function Profile() {
     fullDayC: number[],
     lunchC: number[],
     dinnerC: number[],
-    visitorC: number[]
+    visitorC: number[],
   ): void => {
     if (value) {
       if (value.toLowerCase().trim() === "full day") {
@@ -89,14 +84,12 @@ function Profile() {
     const visitorC = [0, 0, 0, 0, 0];
 
     for (let guest of guests) {
-
       const adults = guest.adults;
       const children = guest.children;
       totalTicketsSold += guest.total;
       if (guest.paid) {
         totalPayment += guest.total;
       }
-
 
       // console.log(guest.day1, guest.day2,)
       updateValue(
@@ -111,7 +104,7 @@ function Profile() {
         fullDayC,
         lunchC,
         dinnerC,
-        visitorC
+        visitorC,
       );
       updateValue(
         guest.day2,
@@ -125,7 +118,7 @@ function Profile() {
         fullDayC,
         lunchC,
         dinnerC,
-        visitorC
+        visitorC,
       );
       updateValue(
         guest.day3,
@@ -139,7 +132,7 @@ function Profile() {
         fullDayC,
         lunchC,
         dinnerC,
-        visitorC
+        visitorC,
       );
       updateValue(
         guest.day4,
@@ -153,7 +146,7 @@ function Profile() {
         fullDayC,
         lunchC,
         dinnerC,
-        visitorC
+        visitorC,
       );
       updateValue(
         guest.day5,
@@ -167,12 +160,11 @@ function Profile() {
         fullDayC,
         lunchC,
         dinnerC,
-        visitorC
+        visitorC,
       );
     }
     setTotal(totalTicketsSold);
-    setPaidTotal(totalPayment)
-
+    setPaidTotal(totalPayment);
 
     setFullDay(fullDay);
     setLunch(lunch);
@@ -183,15 +175,25 @@ function Profile() {
     setLunchC(lunchC);
     setDinnerC(dinnerC);
     setVisitorC(visitorC);
-    console.log("ref(db guests", fullDay, lunch, dinner, visitor, fullDayC, lunchC, dinnerC, visitorC)
-
-
-
-
+    console.log(
+      "ref(db guests",
+      fullDay,
+      lunch,
+      dinner,
+      visitor,
+      fullDayC,
+      lunchC,
+      dinnerC,
+      visitorC,
+    );
   }, [guests]);
 
   return (
-    <Container disableGutters sx={{ padding: "1px", margin: 0 }} maxWidth={false}>
+    <Container
+      disableGutters
+      sx={{ padding: "1px", margin: 0 }}
+      maxWidth={false}
+    >
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -220,7 +222,7 @@ function Profile() {
           {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Current User:{user?.email}
           </Typography> */}
-          {isAdmin ?
+          {isAdmin ? (
             <Button
               // variant="contained"
               color="inherit"
@@ -231,9 +233,10 @@ function Profile() {
               }}
             >
               Add Guest
-            </Button> : <></>
-
-          }
+            </Button>
+          ) : (
+            <></>
+          )}
 
           <Button
             // variant="contained"
@@ -261,7 +264,12 @@ function Profile() {
       </Card>
       <Card sx={{}}>
         <CardContent>
-          <GuestTable guests={guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
+          <GuestTable
+            guests={guests}
+            total={total}
+            paidTotal={paidTotal}
+            isAdmin={isAdmin}
+          ></GuestTable>
         </CardContent>
       </Card>
     </Container>

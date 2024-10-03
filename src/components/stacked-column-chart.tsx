@@ -111,13 +111,12 @@ class StackedColumnChart extends React.Component<
                 style: {
                   fontSize: "13px",
                   fontWeight: 900,
-                  color: "#fff"
+                  color: "#fff",
                 },
               },
             },
           },
         },
-
 
         xaxis: {
           type: "datetime",
@@ -130,17 +129,16 @@ class StackedColumnChart extends React.Component<
           ],
           labels: {
             style: {
-              colors: '#fff'
-            }
-          }
+              colors: "#fff",
+            },
+          },
         },
         legend: {
           position: "right",
           offsetY: 40,
           labels: {
-            colors: "#fff"
-          }
-
+            colors: "#fff",
+          },
         },
         fill: {
           opacity: 1,
@@ -148,10 +146,10 @@ class StackedColumnChart extends React.Component<
         yaxis: {
           labels: {
             style: {
-              colors: '#fff'
-            }
-          }
-        }
+              colors: "#fff",
+            },
+          },
+        },
       },
     };
   }

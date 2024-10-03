@@ -6,13 +6,11 @@ import App from "./App";
 import { FirebaseProvider } from "./context/firebase-context";
 import "./index.css";
 
-
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
-
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -24,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </ThemeProvider>
       </BrowserRouter>
     </FirebaseProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // // If you want to start measuring performance in your app, pass a function

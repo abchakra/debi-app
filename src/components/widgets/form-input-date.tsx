@@ -5,15 +5,15 @@ import { Controller } from "react-hook-form";
 import { FormInputProps } from "./form-input-props";
 
 export const FormInputDate = ({ name, control, label }: FormInputProps) => {
-    return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Controller
-                name={name}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                    <DatePicker value={value} onChange={onChange} />
-                )}
-            />
-        </LocalizationProvider>
-    );
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <DatePicker value={value} onChange={onChange} />
+        )}
+      />
+    </LocalizationProvider>
+  );
 };
