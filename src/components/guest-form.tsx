@@ -140,7 +140,7 @@ const GuestForm = () => {
     } else {
       const guestRef = ref(db, "/guests");
 
-      push(guestRef, data);
+      push(guestRef, guest);
     }
     navigate("/profile")
   };
