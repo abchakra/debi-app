@@ -1,3 +1,4 @@
+import CheckIcon from "@mui/icons-material/Check";
 import PaidIcon from "@mui/icons-material/Paid";
 import {
   Avatar,
@@ -12,6 +13,7 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  ToggleButton,
 } from "@mui/material";
 import List from "@mui/material/List";
 import React from "react";
@@ -31,11 +33,12 @@ export default function GuestList(props: GuestListProps) {
 
   const { guests } = useFirebase();
 
-  const [value, setValue] = React.useState("4");
+  const [value, setValue] = React.useState("1");
 
-  const [time, setTime] = React.useState("Lunch");
+  const [time, setTime] = React.useState("full day");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log((event.target as HTMLInputElement).value);
     setValue((event.target as HTMLInputElement).value);
   };
 
@@ -55,6 +58,23 @@ export default function GuestList(props: GuestListProps) {
     return "None"
   }
 
+
+  function getDayAttendance(g: GuestTableRow): boolean {
+    switch (value) {
+      case "1":
+        return g.attendence_day1;
+      case "2":
+        return g.attendence_day2;
+      case "3":
+        return g.attendence_day3;
+      case "4":
+        return g.attendence_day4;
+      case "5":
+        return g.attendence_day5;
+    }
+    return false
+  }
+
   return (
     <Paper
       style={{
@@ -72,11 +92,11 @@ export default function GuestList(props: GuestListProps) {
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel value="1" control={<Radio />} label="Sosthi" />
-          <FormControlLabel value="2" control={<Radio />} label="Samptami" />
-          <FormControlLabel value="3" control={<Radio />} label="Astomi" />
-          <FormControlLabel value="4" control={<Radio />} label="Nobomi" />
-          <FormControlLabel value="5" control={<Radio />} label="Doshomi" />
+          <FormControlLabel key="1" value="1" control={<Radio />} label="Sosthi" />
+          <FormControlLabel key="2" value="2" control={<Radio />} label="Samptami" />
+          <FormControlLabel key="3" value="3" control={<Radio />} label="Astomi" />
+          <FormControlLabel key="4" value="4" control={<Radio />} label="Nobomi" />
+          <FormControlLabel key="5" value="5" control={<Radio />} label="Doshomi" />
         </RadioGroup>
       </FormControl>
 
@@ -87,16 +107,29 @@ export default function GuestList(props: GuestListProps) {
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={time}
-          onChange={(e) => setTime((e.target as HTMLInputElement).value)}
+          onChange={(e) => {
+            // console.log((e.target as HTMLInputElement).value);
+            setTime((e.target as HTMLInputElement).value)
+          }}
         >
-          <FormControlLabel value="lunch" control={<Radio />} label="Lunch" />
           <FormControlLabel
+            key="lunch"
+            value="lunch"
+            control={<Radio />}
+            label="Lunch" />
+          <FormControlLabel
+            key="full day"
             value="full day"
             control={<Radio />}
             label="Full Day"
           />
-          <FormControlLabel value="dinner" control={<Radio />} label="Dinner" />
           <FormControlLabel
+            key="dinner"
+            value="dinner"
+            control={<Radio />}
+            label="Dinner" />
+          <FormControlLabel
+            key="visitor"
             value="visitor"
             control={<Radio />}
             label="Visitor"
@@ -108,26 +141,26 @@ export default function GuestList(props: GuestListProps) {
         {guests
           .sort((a, b) => compareStrings(a.guestName, b.guestName))
           .filter((g) => {
-            console.log(value, time, g.guestName, g.attendence_day1);
+            // console.log(value, time, g.guestName, g.day1, g.day2, g.day3, g.day4, g.day5);
             if (
-              (value === "1" && g.day1.localeCompare(time) === 0) ||
-              (value === "2" && g.day2.localeCompare(time) === 0) ||
-              (value === "3" && g.day3.localeCompare(time) === 0) ||
-              (value === "4" && g.day4.localeCompare(time) === 0)
+              (value === "1" && g.day1 === time) ||
+              (value === "2" && g.day2 === time) ||
+              (value === "3" && g.day3 === time) ||
+              (value === "4" && g.day4 === time)
             ) {
               return true;
             } else if (value === "5") {
-              if (time.toLowerCase().trim() === "full day" && g.day5.toLowerCase().trim() === "sindoor khela") {
+              if (time === "full day" && g.day5.toLowerCase().trim() === "sindoor khela") {
                 return true;
-              } else if (time.toLowerCase().trim() === "visitor" && g.day5.toLowerCase().trim() === "visitor") {
+              } else if (time === "visitor" && g.day5.toLowerCase().trim() === "visitor") {
                 return true;
               }
             }
             return false;
           })
 
-          .map((g) => (
-            <ListItem key={g.email}>
+          .map((g, i) => (
+            <ListItem key={g.email + i}>
               <ListItemAvatar>
                 <Avatar>
                   {<PaidIcon htmlColor={g.paid ? "green" : "red"} />}
@@ -155,6 +188,18 @@ export default function GuestList(props: GuestListProps) {
                       </Grid>
                       <Grid item xs={6}>
                         <span>{getDay(g).toLowerCase().trim()}</span>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <span>Attendance: { }</span>
+                        <ToggleButton
+                          value="check"
+                          selected={getDayAttendance(g)}
+                          onChange={() => {
+                            // setSelected(!getDayAttendance(g));
+                          }}
+                        >
+                          <CheckIcon htmlColor={getDayAttendance(g) ? "green" : "red"} />
+                        </ToggleButton>
                       </Grid>
                     </Grid>
                     {location.state.isAdmin ? (

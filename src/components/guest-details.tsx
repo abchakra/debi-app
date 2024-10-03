@@ -1,10 +1,9 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
+import { Button, Paper, Select, TextField, Typography } from "@mui/material";
 import { onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { Guest } from "../types";
-
 const GuestDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -114,6 +113,9 @@ const GuestDetails = () => {
           readOnly: true,
         }}
       />
+      <Select>
+
+      </Select>
       <TextField
         type="text"
         id="day2"
