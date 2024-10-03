@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { AuthProvider } from "./context/auth-context";
+import { FirebaseProvider } from "./context/firebase-context";
 import "./index.css";
 
 
@@ -16,14 +16,14 @@ const darkTheme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+    <FirebaseProvider>
+      <BrowserRouter>
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />
           <App />
         </ThemeProvider>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </FirebaseProvider>
   </React.StrictMode>
 );
 

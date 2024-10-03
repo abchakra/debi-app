@@ -1,9 +1,9 @@
 import PaidIcon from "@mui/icons-material/Paid";
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, ListItem, ListItemAvatar, ListItemText, Paper, Radio, RadioGroup } from '@mui/material';
 import List from '@mui/material/List';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GuestContext } from '../store/guest-context';
+import { useFirebase } from "../context/firebase-context";
 import { GuestTableRow } from '../types';
 const compareStrings = (a: string, b: string) => {
     if (a < b) return -1;
@@ -16,7 +16,9 @@ export default function GuestList(props: GuestListProps) {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const guestsCtx = useContext(GuestContext);
+    const { guests, } = useFirebase();
+
+
     const [value, setValue] = React.useState('4');
 
     const [time, setTime] = React.useState('Lunch');
@@ -83,7 +85,7 @@ export default function GuestList(props: GuestListProps) {
             </FormControl>
 
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                {guestsCtx && guestsCtx.guests.sort((a, b) => compareStrings(a.guestName, b.guestName))
+                {guests.sort((a, b) => compareStrings(a.guestName, b.guestName))
                     .filter(g => {
 
                         console.log(value, time, g.guestName, g.attendence_day1)

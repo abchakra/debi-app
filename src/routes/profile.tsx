@@ -9,29 +9,22 @@ import {
   Toolbar,
   Typography
 } from "@mui/material";
-import { onValue, ref } from "firebase/database";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GuestTable from "../components/guest-table";
 import StackedColumnChart from "../components/stacked-column-chart";
-import { AuthContext } from "../context/auth-context";
-import { db } from "../firebase/firebase";
-import { GuestContext } from "../store/guest-context";
-import { GuestTableRow } from "../types";
+import { useFirebase } from "../context/firebase-context";
 
 
 
 
 function Profile() {
-  const { currentUser, signOut } = useContext(AuthContext);
+  const { user, signOutUser, guests } = useFirebase();
 
-  const [isAdmin] = useState(currentUser?.email === "admin@gmail.com");
+  console.log(user, user?.email)
 
+  const [isAdmin] = useState(user ? user.email === "admin@gmail.com" : false);
 
-  const guestsCtx = useContext(GuestContext);
-
-
-  // const [guests, setGuests] = useState<GuestTableRow[]>([]);
   const navigate = useNavigate();
   const [fullDay, setFullDay] = useState([0, 0, 0, 0, 0]);
   const [lunch, setLunch] = useState([0, 0, 0, 0, 0]);
@@ -83,133 +76,119 @@ function Profile() {
   };
 
   useEffect(() => {
+    let totalTicketsSold = 0;
+    let totalPayment = 0;
+    const fullDay = [0, 0, 0, 0, 0];
+    const lunch = [0, 0, 0, 0, 0];
+    const dinner = [0, 0, 0, 0, 0];
+    const visitor = [0, 0, 0, 0, 0];
 
-    if (guestsCtx && guestsCtx.guests.length > 0) {
-      return;
-    }
+    const fullDayC = [0, 0, 0, 0, 0];
+    const lunchC = [0, 0, 0, 0, 0];
+    const dinnerC = [0, 0, 0, 0, 0];
+    const visitorC = [0, 0, 0, 0, 0];
 
-    const query = ref(db, "guests");
-    return onValue(query, (snapshot) => {
-      let totalTicketsSold = 0;
-      let totalPayment = 0;
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        const newGuestList: GuestTableRow[] = [];
+    for (let guest of guests) {
 
-        const fullDay = [0, 0, 0, 0, 0];
-        const lunch = [0, 0, 0, 0, 0];
-        const dinner = [0, 0, 0, 0, 0];
-        const visitor = [0, 0, 0, 0, 0];
-
-        const fullDayC = [0, 0, 0, 0, 0];
-        const lunchC = [0, 0, 0, 0, 0];
-        const dinnerC = [0, 0, 0, 0, 0];
-        const visitorC = [0, 0, 0, 0, 0];
-
-        for (let id in data) {
-          newGuestList.push({ id, ...data[id] });
-
-          const adults = data[id].adults;
-          const children = data[id].children;
-          totalTicketsSold += data[id].total;
-          if (data[id].paid) {
-            totalPayment += data[id].total;
-          }
-
-
-          // console.log(data[id].day1, data[id].day2,)
-          updateValue(
-            data[id].day1,
-            0,
-            adults,
-            children,
-            fullDay,
-            lunch,
-            dinner,
-            visitor,
-            fullDayC,
-            lunchC,
-            dinnerC,
-            visitorC
-          );
-          updateValue(
-            data[id].day2,
-            1,
-            adults,
-            children,
-            fullDay,
-            lunch,
-            dinner,
-            visitor,
-            fullDayC,
-            lunchC,
-            dinnerC,
-            visitorC
-          );
-          updateValue(
-            data[id].day3,
-            2,
-            adults,
-            children,
-            fullDay,
-            lunch,
-            dinner,
-            visitor,
-            fullDayC,
-            lunchC,
-            dinnerC,
-            visitorC
-          );
-          updateValue(
-            data[id].day4,
-            3,
-            adults,
-            children,
-            fullDay,
-            lunch,
-            dinner,
-            visitor,
-            fullDayC,
-            lunchC,
-            dinnerC,
-            visitorC
-          );
-          updateValue(
-            data[id].day5,
-            4,
-            adults,
-            children,
-            fullDay,
-            lunch,
-            dinner,
-            visitor,
-            fullDayC,
-            lunchC,
-            dinnerC,
-            visitorC
-          );
-        }
-        setTotal(totalTicketsSold);
-        setPaidTotal(totalPayment)
-        if (guestsCtx) {
-          guestsCtx.setGuests(newGuestList)
-        }
-        setFullDay(fullDay);
-        setLunch(lunch);
-        setDinner(dinner);
-        setVisitor(visitor);
-
-        setFullDayC(fullDayC);
-        setLunchC(lunchC);
-        setDinnerC(dinnerC);
-        setVisitorC(visitorC);
-        console.log("ref(db guests")
-
+      const adults = guest.adults;
+      const children = guest.children;
+      totalTicketsSold += guest.total;
+      if (guest.paid) {
+        totalPayment += guest.total;
       }
-    });
 
 
-  }, [guestsCtx]);
+      // console.log(guest.day1, guest.day2,)
+      updateValue(
+        guest.day1,
+        0,
+        adults,
+        children,
+        fullDay,
+        lunch,
+        dinner,
+        visitor,
+        fullDayC,
+        lunchC,
+        dinnerC,
+        visitorC
+      );
+      updateValue(
+        guest.day2,
+        1,
+        adults,
+        children,
+        fullDay,
+        lunch,
+        dinner,
+        visitor,
+        fullDayC,
+        lunchC,
+        dinnerC,
+        visitorC
+      );
+      updateValue(
+        guest.day3,
+        2,
+        adults,
+        children,
+        fullDay,
+        lunch,
+        dinner,
+        visitor,
+        fullDayC,
+        lunchC,
+        dinnerC,
+        visitorC
+      );
+      updateValue(
+        guest.day4,
+        3,
+        adults,
+        children,
+        fullDay,
+        lunch,
+        dinner,
+        visitor,
+        fullDayC,
+        lunchC,
+        dinnerC,
+        visitorC
+      );
+      updateValue(
+        guest.day5,
+        4,
+        adults,
+        children,
+        fullDay,
+        lunch,
+        dinner,
+        visitor,
+        fullDayC,
+        lunchC,
+        dinnerC,
+        visitorC
+      );
+    }
+    setTotal(totalTicketsSold);
+    setPaidTotal(totalPayment)
+
+
+    setFullDay(fullDay);
+    setLunch(lunch);
+    setDinner(dinner);
+    setVisitor(visitor);
+
+    setFullDayC(fullDayC);
+    setLunchC(lunchC);
+    setDinnerC(dinnerC);
+    setVisitorC(visitorC);
+    console.log("ref(db guests", fullDay, lunch, dinner, visitor, fullDayC, lunchC, dinnerC, visitorC)
+
+
+
+
+  }, [guests]);
 
   return (
     <Container disableGutters sx={{ padding: "1px", margin: 0 }} maxWidth={false}>
@@ -231,7 +210,7 @@ function Profile() {
           <Button
             color="inherit"
             onClick={() => {
-              if (currentUser) {
+              if (user) {
                 navigate("/guestlist", { state: { isAdmin: isAdmin } });
               }
             }}
@@ -239,14 +218,14 @@ function Profile() {
             Guest List
           </Button>
           {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Current User:{currentUser?.email}
+            Current User:{user?.email}
           </Typography> */}
           {isAdmin ?
             <Button
               // variant="contained"
               color="inherit"
               onClick={() => {
-                if (currentUser) {
+                if (user) {
                   navigate("/addguest");
                 }
               }}
@@ -259,7 +238,7 @@ function Profile() {
           <Button
             // variant="contained"
             color="inherit"
-            onClick={() => signOut()}
+            onClick={() => signOutUser()}
           >
             SignOut
           </Button>
@@ -282,11 +261,7 @@ function Profile() {
       </Card>
       <Card sx={{}}>
         <CardContent>
-          {guestsCtx && guestsCtx.guests.length > 0 ? (
-            <GuestTable guests={guestsCtx.guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
-          ) : (
-            <></>
-          )}
+          <GuestTable guests={guests} total={total} paidTotal={paidTotal} isAdmin={isAdmin}></GuestTable>
         </CardContent>
       </Card>
     </Container>

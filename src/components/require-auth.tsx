@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/auth-context";
+import { useFirebase } from "../context/firebase-context";
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useFirebase();
   let location = useLocation();
 
-  if (!currentUser) {
+  if (!user) {
     // Redirect the user to the home page.
     // Please! Close the mustache {{}}
     return <Navigate to="/" state={{ from: location }} replace />;
